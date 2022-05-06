@@ -1,3 +1,4 @@
+-- Creating database, tables and structure
 CREATE DATABASE inter_project;
 
 USE inter_project;
@@ -8,7 +9,7 @@ CREATE TABLE `users` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at Time',
     `user_name` VARCHAR(150) COMMENT 'User Name',
-    `type` CHAR(1) COMMENT 'Type of user, could be B(buyer), S(seller) or H(hybrid)',
+    `user_type` CHAR(1) COMMENT 'Type of user, could be B(buyer), S(seller) or H(hybrid)',
     PRIMARY KEY(`id`)
 );
 
@@ -36,3 +37,5 @@ CREATE TABLE `posts` (
     PRIMARY KEY(`post_id`),
     FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
+
+-- Creating database, tables and structure
