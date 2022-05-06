@@ -1,3 +1,4 @@
+-- Create database, tables and structure
 CREATE DATABASE inter_project;
 
 USE inter_project;
@@ -36,3 +37,30 @@ CREATE TABLE `posts` (
     PRIMARY KEY(`post_id`),
     FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
+
+-- Create database, tables and structure
+
+-- PROCEDURES
+
+-- createUser PROCEDURE
+-- createUser PROCEDURE
+
+-- deleteUser PROCEDURE
+-- deleteUser PROCEDURE
+
+-- createPost PROCEDURE
+-- createPost PROCEDURE
+
+-- deletePost PROCEDURE
+-- deletePost PROCEDURE
+
+-- updatePost PROCEDURE
+-- updatePost PROCEDURE
+
+-- updateUserInfo PROCEDURE
+-- updateUserInfo PROCEDURE
+
+-- getUsers PROCEDURE
+-- getUsers PROCEDURE
+
+-- PROCEDURES
