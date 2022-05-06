@@ -1,3 +1,5 @@
+CREATE DATABASE inter_project;
+
 USE inter_project;
 
 DROP TABLE IF EXISTS `users`;
