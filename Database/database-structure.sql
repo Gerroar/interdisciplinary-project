@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Created at Time',
-    `user_name` VARCHAR(150) COMMENT 'User Name',
-    `type` CHAR(1) COMMENT 'Type of user, could be B(buyer), S(seller) or H(hybrid)',
+    `user_name` VARCHAR(150) NOT NULL COMMENT 'User Name',
+    `user_type` CHAR(1) NOT NULL COMMENT 'Type of user, could be B(buyer), S(seller) or H(hybrid)',
     PRIMARY KEY(`id`)
 );
 
@@ -41,8 +41,12 @@ CREATE TABLE `posts` (
 -- Create database, tables and structure
 
 -- PROCEDURES
-
+DELIMITER //
 -- createUser PROCEDURE
+CREATE PROCEDURE createUser(
+    IN userName VARCHAR(150),
+    IN userType CHAR(1)
+)
 -- createUser PROCEDURE
 
 -- deleteUser PROCEDURE
@@ -64,3 +68,4 @@ CREATE TABLE `posts` (
 -- getUsers PROCEDURE
 
 -- PROCEDURES
+DELIMITER ;
