@@ -40,7 +40,7 @@ CREATE TABLE `posts` (
 
 -- Create database, tables and structure
 
--- PROCEDURES
+-- STORED PROCEDURES
 DELIMITER //
 
 -- userExists PROCEDURE
@@ -76,5 +76,5 @@ END//
 -- getUsers PROCEDURE
 -- getUsers PROCEDURE
 
--- PROCEDURES
+-- STORED PROCEDURES
 DELIMITER;
