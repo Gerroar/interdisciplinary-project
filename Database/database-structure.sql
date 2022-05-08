@@ -42,11 +42,20 @@ CREATE TABLE `posts` (
 
 -- PROCEDURES
 DELIMITER //
+
+-- userExists PROCEDURE
+CREATE PROCEDURE userExists()
+-- userExists PROCEDURE
+
 -- createUser PROCEDURE
 CREATE PROCEDURE createUser(
     IN userName VARCHAR(150),
     IN userType CHAR(1)
 )
+AS
+BEGIN
+
+END//
 -- createUser PROCEDURE
 
 -- deleteUser PROCEDURE
