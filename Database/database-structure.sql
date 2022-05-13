@@ -23,7 +23,7 @@ CREATE TABLE `settings` (
     `user_email` VARCHAR(320) COMMENT 'User Email with the max. length allowed for an email',
     `user_pass`  VARCHAR(15) NOT NULL COMMENT 'User Password',
     PRIMARY KEY(`set_id`),
-    FOREIGN KEY (`user_id`) REFERENCES users(id)
+    FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `posts`;
@@ -35,7 +35,7 @@ CREATE TABLE `posts` (
     `content` TEXT NOT NULL COMMENT 'Content of the post',
     `post_date` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Post creation date',
     PRIMARY KEY(`post_id`),
-    FOREIGN KEY (`user_id`) REFERENCES users(id)
+    FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Create database, tables and structure
@@ -83,6 +83,7 @@ BEGIN
 END//
 
 DELIMITER ;
+
 -- userExists PROCEDURE
 
 -- createUser PROCEDURE
@@ -97,7 +98,7 @@ DELIMITER ;
  result, if it's registered it will give a 0 to indicate
  that that user already exists */
 
- DROP PROCEDURE createUser;
+DROP PROCEDURE createUser;
 DELIMITER //
 
 CREATE PROCEDURE createUser(
@@ -111,39 +112,115 @@ CREATE PROCEDURE createUser(
 )
 BEGIN
     CALL userExists(userName, false, @isThere);
-    IF @isThere = 0 THEN
-
-        DECLARE userId INT;
-
-        SET 
+    IF (SELECT @isThere = 0) THEN
         SET result = 1;
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
-        INSERT INTO settings()
+
+        SET @userId := (SELECT id
+                       FROM users
+                       WHERE user_name = userName);
+
+        INSERT INTO settings(user_id, user_img, user_phone, user_email, user_pass) VALUES(@userId, userImg, userPhone, userEmail, userPass);
     ELSE
-        SET result = 0;
+       SET result = 0;
     END IF;
     SELECT result;
 END //
 
-DELIMITER;
+DELIMITER ;
 
 -- createUser PROCEDURE
 
 -- deleteUser PROCEDURE
 
+/*REASON : Automate the process of deleting a user*/
+
+/*HOW IT WORKS : By giving the userName the procedure
+ search for coincidences to get the userId, it will be
+ imposible that the user doesn't exists because this
+ option will be only available for the user to delete
+ it's own account or for the administrator with the 
+ actual users, also, the procedure detects if the user
+ have any posts created and delete them*/
+
 DELIMITER //
 
-CREATE PROCEDURE deleteUser()
+CREATE PROCEDURE deleteUser(
+    IN userName VARCHAR(150)
+)
+BEGIN
+    SET @userId := (SELECT id
+                    FROM users
+                    WHERE user_name = LOWER(userName));
+
+    IF EXISTS (
+        SELECT user_id
+        FROM posts
+        WHERE user_id = @userId
+    ) THEN 
+    DELETE FROM posts WHERE user_id = @userId;
+    END IF;
+
+    DELETE users, settings
+    FROM users INNER JOIN settings ON users.id = settings.user_id
+    WHERE users.id = @userId;
+
+
+END //
 DELIMITER ;
+
 -- deleteUser PROCEDURE
 
 -- createPost PROCEDURE
+
+/*REASON : Automate the process of creating a post*/
+
+/*HOW IT WORKS : By giving the userName it will search
+ the userId in users, after the rest of the info will
+ be added on posts */
+DELIMITER //
+
+CREATE PROCEDURE createPost(
+    IN userName VARCHAR(250),
+    IN postTitle VARCHAR(100),
+    IN postContent TEXT
+)
+BEGIN 
+    SET @userId := (SELECT id
+                    FROM users
+                    WHERE user_name = userName);
+    INSERT INTO posts(user_id, title, content) VALUES(@userId, postTitle, postContent);
+END //
+DELIMITER ;
 -- createPost PROCEDURE
 
 -- deletePost PROCEDURE
+
+/*REASON : Automate the process of creating a post*/
+/*HOW IT WORKS : By giving the postId we locate the 
+  post, we don't need to check if the post exists or
+  not because the user or the admin will only be able
+  to delete posts that are visible for them*/
+DELIMITER //
+
+CREATE PROCEDURE deletePost(
+    IN postId INT
+)
+BEGIN
+    DELETE FROM posts WHERE post_id = postId;
+END //
+DELIMITER ;
 -- deletePost PROCEDURE
 
 -- updatePost PROCEDURE
+
+DELIMITER //
+
+CREATE PROCEDURE updatePost(
+    IN postId INT,
+    IN 
+)
+DELIMITER ;
 -- updatePost PROCEDURE
 
 -- updateUserInfo PROCEDURE
@@ -154,3 +231,14 @@ DELIMITER ;
 
 -- STORED PROCEDURES
 
+CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
+CALL createUser('gerroar97', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
+ALTER TABLE posts AUTO_INCREMENT = 0;
+
+CALL createPost('gerroar', 'Hello world!', 'lorem ipsum');
+CALL `deletePost`(3);
+
+CALL deleteUser('gerroar');
+ALTER TABLE users AUTO_INCREMENT = 0;
+ALTER TABLE settings AUTO_INCREMENT = 0;
+ALTER TABLE posts AUTO_INCREMENT = 0;
