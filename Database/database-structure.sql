@@ -40,7 +40,7 @@ CREATE TABLE `posts` (
 
 -- Create database, tables and structure
 
--- STORED PROCEDURES
+-- GENERAL STORED PROCEDURES
 
 -- userExists PROCEDURE
 DELIMITER //
@@ -212,10 +212,19 @@ DELIMITER //
 CREATE PROCEDURE createPost(
     IN userId INT,
     IN postTitle VARCHAR(100),
-    IN postContent TEXT
+    IN postContent TEXT,
+    OUT created BIT
 )
 BEGIN 
-    INSERT INTO posts(user_id, title, content) VALUES(userId, postTitle, postContent);
+    SET @userType := (SELECT user_type
+                      FROM users
+                      WHERE id = userId);
+    IF (@userType IN ('s', 'h')) THEN
+        INSERT INTO posts(user_id, title, content) VALUES(userId, postTitle, postContent);
+        SET created = 1;
+    ELSE
+        SET created = 0;
+    END IF;
 END //
 DELIMITER ;
 -- createPost PROCEDURE
@@ -312,10 +321,42 @@ END//
 DELIMITER ;
 -- updateUserInfo PROCEDURE
 
+-- userPosts PROCEDURE
+DELIMITER //
+
+CREATE PROCEDURE userPosts(
+    IN userId INT
+)
+BEGIN
+    SELECT *
+    FROM all_posts AS p
+    WHERE p.u_id = userId;
+END//
+DELIMITER ;
+-- userPosts PROCEDURE
+
+-- GENERAL STORED PROCEDURES
+
+-- USER MANAGMENT PROCEDURES
+
 -- getUsers PROCEDURE
 -- getUsers PROCEDURE
 
--- STORED PROCEDURES
+-- USER MANAGMENT PROCEDURES
+
+-- VIEWS
+
+-- all_posts VIEW
+CREATE VIEW all_posts
+AS
+    SELECT s.user_img AS img, u.id AS u_id, u.user_name AS user_n, p.post_id AS p_id,  p.title AS title, p.content AS content, p.post_date AS post_d
+    FROM settings s
+        INNER JOIN users u
+            ON s.user_id = u.id
+        INNER JOIN posts p
+            ON u.id = p.user_id;
+-- all_posts VIEW
+-- VIEWS
 
 DROP PROCEDURE updatePost;
 
@@ -323,7 +364,8 @@ CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.c
 CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
-CALL createPost('gerroar', 'Hello world!', 'lorem ipsum');
+CALL createPost(3, 'Test!', 'lorem ipsum', @created);
+CALL createPost(4, 'Hello world!', 'lorem ipsum', @created);
 CALL `updatePost`(3, 1, 'Bliat World!', 'lorem ipsum', @result);
 SELECT @result;
 CALL `deletePost`(3);
