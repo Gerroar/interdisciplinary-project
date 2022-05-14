@@ -23,7 +23,7 @@ CREATE TABLE `settings` (
     `user_email` VARCHAR(320) COMMENT 'User Email with the max. length allowed for an email',
     `user_pass`  VARCHAR(15) NOT NULL COMMENT 'User Password',
     PRIMARY KEY(`set_id`),
-    FOREIGN KEY (`user_id`) REFERENCES users(id)
+    FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `posts`;
@@ -35,7 +35,7 @@ CREATE TABLE `posts` (
     `content` TEXT NOT NULL COMMENT 'Content of the post',
     `post_date` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Post creation date',
     PRIMARY KEY(`post_id`),
-    FOREIGN KEY (`user_id`) REFERENCES users(id)
+    FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Creating database, tables and structure
