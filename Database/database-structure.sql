@@ -274,12 +274,41 @@ DELIMITER ;
 -- updatePost PROCEDURE
 
 -- updateUserInfo PROCEDURE
+
+/*REASON : Automate the process of update info from users and settings*/
+/*HOW IT WORKS : First we create a variable with the current password
+  because that field cannot be passed as null, after that we update the
+  users info, and we check if 'userPass' have any value, if not, we use
+  the old password, if it have it, we just pass the new password*/
 DELIMITER //
 CREATE PROCEDURE updateUserInfo(
     IN userId INT,
     IN userName VARCHAR(150),
-    IN userType CHAR(1)
+    IN userType CHAR(1),
+    IN userImg TEXT,
+    IN userPhone VARCHAR(31),
+    IN userEmail VARCHAR(320),
+    IN userPass VARCHAR(15)
 )
+BEGIN
+    SET @samePass := (SELECT user_pass
+                      FROM settings
+                      WHERE user_id = userId);
+
+    UPDATE users
+    SET user_name = userName, user_type = userType
+    WHERE id = userId;
+    
+    IF (userPass IS NOT NULL) THEN
+         UPDATE settings
+         SET user_img = userImg, user_phone = userPhone, user_email = userEmail, user_pass = userPass
+         WHERE user_id = userId;
+    ELSE
+        UPDATE settings
+        SET user_img = userImg, user_phone = userPhone, user_email = userEmail, user_pass = @samePass
+        WHERE user_id = userId;
+    END IF;
+END//
 DELIMITER ;
 -- updateUserInfo PROCEDURE
 
@@ -298,6 +327,7 @@ CALL createPost('gerroar', 'Hello world!', 'lorem ipsum');
 CALL `updatePost`(3, 1, 'Bliat World!', 'lorem ipsum', @result);
 SELECT @result;
 CALL `deletePost`(3);
+CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com', 'gerroar1234');
 
 CALL deleteUser('gerroar');
 ALTER TABLE users AUTO_INCREMENT = 0;
