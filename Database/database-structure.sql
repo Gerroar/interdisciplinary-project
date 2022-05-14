@@ -42,9 +42,8 @@ CREATE TABLE `posts` (
 
 -- STORED PROCEDURES
 
-DELIMITER //
-
 -- userExists PROCEDURE
+DELIMITER //
 
 /*REASON : The query of the existence of a 
   user will be constant in the use of the 
@@ -86,6 +85,35 @@ DELIMITER ;
 
 -- userExists PROCEDURE
 
+-- correctType PROCEDURE
+DELIMITER //
+
+/*REASON : Check if the type value is the proper one
+ of the possibilities*/
+
+ /*HOW IT WORKS : By passing the userType, the parameter
+   will be checked with something similar to a switch-case
+   statement, in case that is correct the OUT value will be
+   SET to 1, otherwise will be SET to 0*/
+CREATE PROCEDURE correctType(
+    IN userType CHAR(1),
+    OUT correctT BIT
+)
+BEGIN
+    CASE LOWER(userType)
+        WHEN 'b' THEN
+            SET correctT = 1;
+        WHEN 's' THEN
+            SET correctT = 1;
+        WHEN 'h' THEN
+            SET correctT = 1;
+        ELSE
+            SET correctT = 0;
+    END CASE;
+END//
+DELIMITER ;
+--correctType PROCEDURE
+
 -- createUser PROCEDURE
 
 /*REASON : Automate the process of creating a new user
@@ -96,9 +124,9 @@ DELIMITER ;
  and userPass(settings). Will check if the user is already registered
  if is not it will insert the values and give a 1 as a 
  result, if it's registered it will give a 0 to indicate
- that that user already exists */
+ that that user already exists , and also checks if the
+ userType is correct*/
 
-DROP PROCEDURE createUser;
 DELIMITER //
 
 CREATE PROCEDURE createUser(
@@ -111,8 +139,9 @@ CREATE PROCEDURE createUser(
     OUT result BIT
 )
 BEGIN
-    CALL userExists(userName, false, @isThere);
-    IF (SELECT @isThere = 0) THEN
+    CALL `userExists`(userName, false, @isThere);
+    CALL `correctType`(userType, @correctT);
+    IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1)) THEN
         SET result = 1;
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
 
@@ -175,21 +204,18 @@ DELIMITER ;
 
 /*REASON : Automate the process of creating a post*/
 
-/*HOW IT WORKS : By giving the userName it will search
- the userId in users, after the rest of the info will
- be added on posts */
+/*HOW IT WORKS : Creates a post from the userId*/
+
+ DROP PROCEDURE createPost;
 DELIMITER //
 
 CREATE PROCEDURE createPost(
-    IN userName VARCHAR(250),
+    IN userId INT,
     IN postTitle VARCHAR(100),
     IN postContent TEXT
 )
 BEGIN 
-    SET @userId := (SELECT id
-                    FROM users
-                    WHERE user_name = userName);
-    INSERT INTO posts(user_id, title, content) VALUES(@userId, postTitle, postContent);
+    INSERT INTO posts(user_id, title, content) VALUES(userId, postTitle, postContent);
 END //
 DELIMITER ;
 -- createPost PROCEDURE
@@ -214,16 +240,47 @@ DELIMITER ;
 
 -- updatePost PROCEDURE
 
+/*REASON : Automate the process of updating a post*/
+/*HOW IT WORKS : By passing the postId, 'id' that will 
+  be picked up after the user has clicked on one of 
+  their posts, and to be sure, userId will be also
+  required, if everything worked, it will give a 1
+  as a result, 0 if not.*/
 DELIMITER //
 
 CREATE PROCEDURE updatePost(
+    IN userId INT,
     IN postId INT,
-    IN 
+    IN postTitle VARCHAR(100),
+    IN postContent TEXT,
+    OUT result BIT
 )
+BEGIN
+    IF EXISTS(
+        SELECT user_id
+        FROM posts
+        WHERE user_id = userId
+    )THEN
+        SET @updateTime := CURRENT_TIMESTAMP();
+        UPDATE posts
+        SET title = postTitle, content = postContent, post_date = @updateTime
+        WHERE post_id = postId;
+        SET result = 1;
+    ELSE
+        SET result = 0;
+    END IF;
+END //
 DELIMITER ;
 -- updatePost PROCEDURE
 
 -- updateUserInfo PROCEDURE
+DELIMITER //
+CREATE PROCEDURE updateUserInfo(
+    IN userId INT,
+    IN userName VARCHAR(150),
+    IN userType CHAR(1)
+)
+DELIMITER ;
 -- updateUserInfo PROCEDURE
 
 -- getUsers PROCEDURE
@@ -231,11 +288,15 @@ DELIMITER ;
 
 -- STORED PROCEDURES
 
+DROP PROCEDURE updatePost;
+
 CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
-CALL createUser('gerroar97', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
+CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
 CALL createPost('gerroar', 'Hello world!', 'lorem ipsum');
+CALL `updatePost`(3, 1, 'Bliat World!', 'lorem ipsum', @result);
+SELECT @result;
 CALL `deletePost`(3);
 
 CALL deleteUser('gerroar');
