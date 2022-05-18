@@ -3,87 +3,87 @@ export default function SigninPage() {
   return (
     <body>
       <link rel="stylesheet" href="./src/index.css"></link>
-      <div class="container">
-        <form class="form" id="login">
-          <h1 class="form__title">Login</h1>
-          <div class="form__message form__message--error"></div>
-          <div class="form__input-group">
+      <div className="container">
+        <form className="form" id="login">
+          <h1 className="form__title">Login</h1>
+          <div className="form__message form__message--error"></div>
+          <div className="form__input-group">
             <input
-              autofocus
+              autoFocus
               type="text"
-              class="form__input"
+              className="form__input"
               placeholder="Username or email"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <div class="form__input-group">
+          <div className="form__input-group">
             <input
-              autofocus
+              autoFocus
               type="password"
-              class="form__input"
+              className="form__input"
               placeholder="Password"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <button class="form__button" type="submit">
+          <button className="form__button" type="submit">
             Continue
           </button>
-          <p class="form__text">
-            <a href="#" class="form__link">
+          <p className="form__text">
+            <a href="#" className="form__link">
               Forgot your password? (Still need to make reset password page)
             </a>
           </p>
-          <p class="form__text">
-            <a href="./" id="linkCreateAccount" class="form__link">
+          <p className="form__text">
+            <a href="./" id="linkCreateAccount" className="form__link">
               Don't have an account? Sign up here
             </a>
           </p>
         </form>
-        <form class="form form--hidden" id="createAccount">
-          <h1 class="form__title">Create Account</h1>
-          <div class="form__message form__message--error"></div>
-          <div class="form__input-group">
+        <form className="form form--hidden" id="createAccount">
+          <h1 className="form__title">Create Account</h1>
+          <div className="form__message form__message--error"></div>
+          <div className="form__input-group">
             <input
               id="signupUsername"
               autoFocus
               type="text"
-              class="form__input"
+              className="form__input"
               placeholder="Username"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <div class="form__input-group">
+          <div className="form__input-group">
             <input
-              autofocus
+              autoFocus
               type="text"
-              class="form__input"
+              className="form__input"
               placeholder="Email Address"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <div class="form__input-group">
+          <div className="form__input-group">
             <input
-              autofocus
+              autoFocus
               type="password"
-              class="form__input"
+              className="form__input"
               placeholder="Password"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <div class="form__input-group">
+          <div className="form__input-group">
             <input
-              autofocus
+              autoFocus
               type="password"
-              class="form__input"
+              className="form__input"
               placeholder="Confirm Password"
             />
-            <div class="form__input-error-message"></div>
+            <div className="form__input-error-message"></div>
           </div>
-          <button class="form__button" type="submit">
+          <button className="form__button" type="submit">
             Continue
           </button>
-          <p class="form__text">
-            <a href="./" id="linkLogin" class="form__link">
+          <p className="form__text">
+            <a href="./" id="linkLogin" className="form__link">
               Already have an account? Sign in
             </a>
           </p>
