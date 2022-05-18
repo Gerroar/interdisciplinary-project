@@ -206,7 +206,6 @@ DELIMITER ;
 
 /*HOW IT WORKS : Creates a post from the userId*/
 
- DROP PROCEDURE createPost;
 DELIMITER //
 
 CREATE PROCEDURE createPost(
@@ -322,6 +321,7 @@ DELIMITER ;
 -- updateUserInfo PROCEDURE
 
 -- userPosts PROCEDURE
+
 DELIMITER //
 
 CREATE PROCEDURE userPosts(
@@ -330,7 +330,8 @@ CREATE PROCEDURE userPosts(
 BEGIN
     SELECT *
     FROM all_posts AS p
-    WHERE p.u_id = userId;
+    WHERE p.u_id = userId
+    ORDER BY p.post_d DESC;
 END//
 DELIMITER ;
 -- userPosts PROCEDURE
@@ -358,20 +359,23 @@ AS
 -- all_posts VIEW
 -- VIEWS
 
-DROP PROCEDURE updatePost;
-
+/*TESTS*/
 CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
 CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
 CALL createPost(3, 'Test!', 'lorem ipsum', @created);
 CALL createPost(4, 'Hello world!', 'lorem ipsum', @created);
-CALL `updatePost`(3, 1, 'Bliat World!', 'lorem ipsum', @result);
+CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
+CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
 SELECT @result;
 CALL `deletePost`(3);
 CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com', 'gerroar1234');
+CALL `userPosts`(4);
 
 CALL deleteUser('gerroar');
 ALTER TABLE users AUTO_INCREMENT = 0;
 ALTER TABLE settings AUTO_INCREMENT = 0;
 ALTER TABLE posts AUTO_INCREMENT = 0;
+
+/*TESTS*/
