@@ -4,7 +4,7 @@ export default function SigninPage() {
     <body>
       <link rel="stylesheet" href="./src/index.css"></link>
       <div className="container">
-        <form className="form" id="login">
+        <form className="form" id="login" method="post">
           <h1 className="form__title">Login</h1>
           <div className="form__message form__message--error"></div>
           <div className="form__input-group">
@@ -39,7 +39,7 @@ export default function SigninPage() {
             </a>
           </p>
         </form>
-        <form className="form form--hidden" id="createAccount">
+        <form className="form form--hidden" id="createAccount" method="post">
           <h1 className="form__title">Create Account</h1>
           <div className="form__message form__message--error"></div>
           <div className="form__input-group">

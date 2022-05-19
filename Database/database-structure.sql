@@ -20,7 +20,7 @@ CREATE TABLE `settings` (
     `user_id` INT COMMENT 'Foreign Key',
     `user_img` TEXT COMMENT 'URL of the image',
     `user_phone` VARCHAR(31) COMMENT 'User Phone Number',
-    `user_email` VARCHAR(320) COMMENT 'User Email with the max. length allowed for an email',
+    `user_email` VARCHAR(320) NOT NULL COMMENT 'User Email with the max. length allowed for an email',
     `user_pass`  VARCHAR(15) NOT NULL COMMENT 'User Password',
     PRIMARY KEY(`set_id`),
     FOREIGN KEY (`user_id`) REFERENCES users(id) ON DELETE CASCADE
