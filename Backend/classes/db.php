@@ -19,12 +19,48 @@
             }//end if-else
         }//end of the constructor
 
-        public function close() {
-            if($this->isConnected){
-                return $this->con->close();
+        public function Close() {
+            if($this->con->close()){
+                $this->isConnected = false;
+                return true;
             } else {
                 error_log("Connection already close");
+                return false;
             }//end if-else
         }//end of close function
+
+        public function Query($query, $returnAsJSON = false){
+            if(!$this->isConnected) {
+                error_log("No connection established");
+                return false;
+            }//end of if
+
+            $result = $this->con->query($query);
+
+            if($returnAsJSON) {
+
+                $json = [];
+                $json["status"] = $result ? "success" : "failed";
+                $json["errorCode"] = $result ? "" : "Wrong Query";
+
+                if($result) {
+                    $data = [];
+                    while($row = $result->fetch_assoc()){
+                        $data[] = $row;
+                    }//end of while
+
+                    $json["data"] = $data;
+                }//end if result
+                return json_encode($json);
+            }else{
+                if($result){
+
+                    return $result;
+                }else{
+                    error_log("Invalid SQL Query");
+                    return false;
+                }//end if-else
+            }//end if-else returnAsJSON
+        }//end of query function
     }//end of the class db
 ?>
