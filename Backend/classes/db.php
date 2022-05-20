@@ -1,6 +1,8 @@
 <?php
     /** This PHP file is for connection*/
+    /** Using PDO instead of MySQLi to use procedures OUT variables */
     //TERMINAL : php -S localhost:8000
+    require 'config.php';
     class db {
 
         //Variables

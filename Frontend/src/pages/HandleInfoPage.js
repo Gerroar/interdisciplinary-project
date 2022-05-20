@@ -1,16 +1,46 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-export default function SigninPage() {
+
+import { useState } from "react";
+
+/**We use setAuth to check in future pages that
+ * the user is authenticated and is not browsing 
+ * the HomePage as a stranger. */
+
+export default function HandleInfoPage({setAuth}) {
+  
+  //Just in case that we get an error fetching data
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSignIn(event) {
+    event.preventDefault();
+    const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
+    const password = event.target.password.value; //password value from input
+    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
+
+    /**Here I'm using 8000 port because I'm working with that port to avoid conflict
+     * between react and php, this URL will change when we upload the project to a server
+     */
+    const response = await fetch("http://localhost:8000/Backend/auth/?action=login", {
+      method: "POST",
+      body: JSON.stringify(loginObject)
+    });
+
+    const data = await response.json();
+    
+  }//end of handleSignIn
+
   return (
     <body>
       <link rel="stylesheet" href="./src/index.css"></link>
       <div className="container">
-        <form className="form" id="login" method="post">
+        <form className="form" id="login" onSubmit={handleSignIn}>
           <h1 className="form__title">Login</h1>
           <div className="form__message form__message--error"></div>
           <div className="form__input-group">
             <input
               autoFocus
               type="text"
+              name="useroremail"
               className="form__input"
               placeholder="Username or email"
             />
@@ -20,6 +50,7 @@ export default function SigninPage() {
             <input
               autoFocus
               type="password"
+              name="password"
               className="form__input"
               placeholder="Password"
             />
@@ -163,3 +194,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+

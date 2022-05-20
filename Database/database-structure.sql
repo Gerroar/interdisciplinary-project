@@ -85,6 +85,33 @@ DELIMITER ;
 
 -- userExists PROCEDURE
 
+-- checkEmail PROCEDURE
+DELIMITER //
+/*REASON: Automate the process of checking if user exists by looking for the email*/
+/*HOW IT WORKS: It will work the same as userExists just using the passed email*/
+CREATE PROCEDURE checkEmail(
+    IN userEmail VARCHAR(320),
+    IN showR BIT,
+    OUT isThere BIT
+)
+BEGIN
+    IF EXISTS(
+        SELECT u_email
+        FROM full_user_info
+        WHERE u_email = userEmail
+    )THEN
+        SET isThere = 1;
+    ELSE
+        SET isThere = 0;
+    END IF;
+
+    IF showR = 1 THEN
+        SELECT isThere;
+    END IF;
+END//
+DELIMITER ;
+-- checkEmail PROCEDURE
+
 -- correctType PROCEDURE
 DELIMITER //
 
@@ -357,6 +384,15 @@ AS
         INNER JOIN posts p
             ON u.id = p.user_id;
 -- all_posts VIEW
+
+-- full_user_info
+CREATE VIEW full_user_info
+AS
+    SELECT  u.id AS u_id, u.user_name AS u_name, u.user_type AS u_type, s.user_email AS u_email, s.user_pass AS u_pass, s.user_phone AS u_phone, s.user_img AS u_img
+    FROM users u
+        INNER JOIN settings s
+            ON u.id = s.user_id;
+-- full_user_info
 -- VIEWS
 
 /*TESTS*/
