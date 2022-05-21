@@ -1,7 +1,7 @@
 <?php
     /**This file is used to put the database parameters */
-    $host = 'localhost';
-    $user = 'root';
-    $db = 'inter_project';
-    $password = '7794CopErnico?';
+    $dbhost = 'localhost';
+    $dbuser = 'root';
+    $dbname = 'inter_project';
+    $dbpassword = '7794CopErnico?';
 ?>
