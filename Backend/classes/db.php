@@ -1,18 +1,18 @@
 <?php
     /** This PHP file is for connection*/
-    /** Using PDO instead of MySQLi to use procedures OUT variables */
     //TERMINAL : php -S localhost:8000
     require 'config.php';
     class db {
 
         //Variables
             protected $con;
-            protected $isConnected;
+            protected $isConnected;         
         //Variables
 
         /**Provisional constructor, will change after uploading the project to server */
-        public function __construct($dbhost, $dbuser, $dbpass, $dbname){
-            $this->con = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        public function __construct($autoConnect = false){
+            global $dbhost, $dbuser,$dbpassword, $dbname;
+            $this->con = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
             if ($this->con->connect_error) {
                 $this->isConnected = false;
                 error_log('Failed to connect to MySQL - '.$this->con->connect_error);
