@@ -3,11 +3,10 @@
 import { useState } from "react";
 
 /**We use setAuth to check in future pages that
- * the user is authenticated and is not browsing 
+ * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
 
-export default function HandleInfoPage({setAuth}) {
-  
+export default function HandleInfoPage({ setAuth }) {
   //Just in case that we get an error fetching data
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -15,19 +14,52 @@ export default function HandleInfoPage({setAuth}) {
     event.preventDefault();
     const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
     const password = event.target.password.value; //password value from input
-    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
+    const loginObject = { useroremail: useroremail, password: password }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
      * between react and php, this URL will change when we upload the project to a server
      */
-    const response = await fetch("http://localhost:8000/Backend/auth/?action=login", {
-      method: "POST",
-      body: JSON.stringify(loginObject)
-    });
+    const response = await fetch(
+      "http://localhost:8000/Backend/auth/?action=login",
+      {
+        method: "POST",
+        body: JSON.stringify(loginObject),
+      }
+    );
 
     const data = await response.json();
-    
-  }//end of handleSignIn
+
+    return data;
+  } //end of handleSignIn
+
+  async function handleSignUp(event) {
+    event.preventDefault();
+    const username = event.target.username.value; //value of username
+    const email = event.target.email.value; //value of username
+    const password = event.target.password.value; //password value from input
+    const passwordConfirm = event.target.passwordConfirm.value; //password value from input
+    const signupObject = {
+      username: username,
+      email: email,
+      password: password,
+      passwordConfirm: passwordConfirm,
+    }; //object that we pass to php and it's taken by php://input
+
+    /**Here I'm using 8000 port because I'm working with that port to avoid conflict
+     * between react and php, this URL will change when we upload the project to a server
+     */
+    const response = await fetch(
+      "http://localhost:8000/Backend/auth/?action=signup",
+      {
+        method: "POST",
+        body: JSON.stringify(signupObject),
+      }
+    );
+
+    const data = await response.json();
+
+    return data;
+  } //end of handleSignUp
 
   return (
     <body>
@@ -70,46 +102,103 @@ export default function HandleInfoPage({setAuth}) {
             </a>
           </p>
         </form>
-        <form className="form form--hidden" id="createAccount" method="post">
+        <form
+          className="form form--hidden"
+          id="createAccount"
+          onSubmit={handleSignUp}
+        >
           <h1 className="form__title">Create Account</h1>
           <div className="form__message form__message--error"></div>
           <div className="form__input-group">
             <input
-              id="signupUsername"
+              name="username"
               autoFocus
               type="text"
               className="form__input"
               placeholder="Username"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
           <div className="form__input-group">
             <input
+              name="email"
               autoFocus
               type="text"
               className="form__input"
               placeholder="Email Address"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
           <div className="form__input-group">
             <input
+              name="password"
               autoFocus
               type="password"
               className="form__input"
               placeholder="Password"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
           <div className="form__input-group">
             <input
+              id="passwordConfirm"
               autoFocus
               type="password"
               className="form__input"
               placeholder="Confirm Password"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
+          <div className="form__input-group">
+            <input
+              id="phoneNumber"
+              autoFocus
+              type="tel"
+              className="form__input"
+              placeholder="Phone Number"
+              required
+            />
+            <div className="form__input-error-message"></div>
+          </div>
+          <fieldset data-role="controlgroup" data-type="horizontal">
+            <div className="form__input-group">
+              <input
+                id="userTypeB"
+                autoFocus
+                type="checkbox"
+                className="form__input"
+                required
+              />
+              <label for="userTypeB">Buyer</label>
+              <div className="form__input-error-message"></div>
+            </div>
+            <div className="form__input-group">
+              <input
+                id="userTypeS"
+                autoFocus
+                type="checkbox"
+                className="form__input"
+                required
+              />
+              <label for="userTypeS">Seller</label>
+              <div className="form__input-error-message"></div>
+            </div>
+            <div className="form__input-group">
+              <input
+                id="userTypeB"
+                autoFocus
+                type="checkbox"
+                className="form__input"
+                required
+              />
+              <label for="userTypeH">Hybrid</label>
+              <div className="form__input-error-message"></div>
+            </div>
+          </fieldset>
           <button className="form__button" type="submit">
             Continue
           </button>
@@ -167,14 +256,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createAccountForm.classList.add("form--hidden");
   });
 
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    //Perform fetch login, message may be set on PHP backend side
-
-    setFormMessage(loginForm, "error", "Invalid username/password combination");
-  });
-
   document.querySelectorAll(".form__input").forEach((inputElement) => {
     inputElement.addEventListener("blur", (e) => {
       if (
@@ -194,5 +275,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
-
