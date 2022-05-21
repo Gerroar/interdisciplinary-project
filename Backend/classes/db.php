@@ -12,13 +12,15 @@
         /**Provisional constructor, will change after uploading the project to server */
         public function __construct($autoConnect = false){
             global $dbhost, $dbuser,$dbpassword, $dbname;
-            $this->con = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
-            if ($this->con->connect_error) {
-                $this->isConnected = false;
-                error_log('Failed to connect to MySQL - '.$this->con->connect_error);
-            } else {
-                $this->isConnected = true;
-            }//end if-else
+            if($autoConnect) {
+                $this->con = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
+                if ($this->con->connect_error) {
+                    $this->isConnected = false;
+                    error_log('Failed to connect to MySQL - '.$this->con->connect_error);
+                } else {
+                    $this->isConnected = true;
+                }//end if-else
+            }//end of if autoConnect
         }//end of the constructor
 
         public function Close() {
