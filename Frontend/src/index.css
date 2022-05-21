@@ -12,7 +12,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  background: url(../background.jpg);
+  background: url(../background.png);
   background-size: cover;
 }
 
@@ -30,6 +30,20 @@ body {
 .form__input,
 .form__button {
   font: 500 1rem "Quicksand", sans-serif;
+}
+
+.form__dropdown {
+  margin-bottom: 1rem;
+  font: 500 1rem "Quicksand", sans-serif;
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: var(--border-radius);
+  border: 1px solid #dddddd;
+  outline: none;
+  background: #eeeeee;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .form--hidden {
@@ -70,18 +84,7 @@ body {
   display: block;
   width: 100%;
   padding: 0.75rem;
-  box-sizing: border-box;
-  border-radius: var(--border-radius);
-  border: 1px solid #dddddd;
-  outline: none;
-  background: #eeeeee;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.form__input {
-  display: inline-block;
-  width: 100%;
-  padding: 0.75rem;
+  margin-bottom: 1.25rem;
   box-sizing: border-box;
   border-radius: var(--border-radius);
   border: 1px solid #dddddd;

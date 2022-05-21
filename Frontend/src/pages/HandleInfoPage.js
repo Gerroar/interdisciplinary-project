@@ -38,11 +38,15 @@ export default function HandleInfoPage({ setAuth }) {
     const email = event.target.email.value; //value of username
     const password = event.target.password.value; //password value from input
     const passwordConfirm = event.target.passwordConfirm.value; //password value from input
+    const phoneNumber = event.target.phoneNumber.value;
+    const userType = event.target.userType.value;
     const signupObject = {
       username: username,
       email: email,
       password: password,
       passwordConfirm: passwordConfirm,
+      phoneNumber: phoneNumber,
+      userType: userType,
     }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
@@ -62,7 +66,7 @@ export default function HandleInfoPage({ setAuth }) {
   } //end of handleSignUp
 
   return (
-    <body>
+    <section>
       <link rel="stylesheet" href="./src/index.css"></link>
       <div className="container">
         <form className="form" id="login" onSubmit={handleSignIn}>
@@ -164,41 +168,17 @@ export default function HandleInfoPage({ setAuth }) {
             />
             <div className="form__input-error-message"></div>
           </div>
-          <fieldset data-role="controlgroup" data-type="horizontal">
-            <div className="form__input-group">
-              <input
-                id="userTypeB"
-                autoFocus
-                type="checkbox"
-                className="form__input"
-                required
-              />
-              <label for="userTypeB">Buyer</label>
-              <div className="form__input-error-message"></div>
-            </div>
-            <div className="form__input-group">
-              <input
-                id="userTypeS"
-                autoFocus
-                type="checkbox"
-                className="form__input"
-                required
-              />
-              <label for="userTypeS">Seller</label>
-              <div className="form__input-error-message"></div>
-            </div>
-            <div className="form__input-group">
-              <input
-                id="userTypeB"
-                autoFocus
-                type="checkbox"
-                className="form__input"
-                required
-              />
-              <label for="userTypeH">Hybrid</label>
-              <div className="form__input-error-message"></div>
-            </div>
-          </fieldset>
+          <div>
+            <select
+              className="form__dropdown"
+              name="Type of User"
+              id="userType"
+            >
+              <option value="userBuyer">Buyer</option>
+              <option value="userSeller">Seller</option>
+              <option value="userHybrid">Hybrid</option>
+            </select>
+          </div>
           <button className="form__button" type="submit">
             Continue
           </button>
@@ -209,7 +189,7 @@ export default function HandleInfoPage({ setAuth }) {
           </p>
         </form>
       </div>
-    </body>
+    </section>
   );
 }
 

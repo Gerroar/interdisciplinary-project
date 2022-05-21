@@ -31,10 +31,13 @@
                 //Take the new user object from the body response in HandleInfoPage
                 $newUser = json_decode(file_get_contents('php://input'));
                 //After that now we can take the info
-                $username = $signupObject->username;
-                $email = $signupObject->email;
-                $password = $signupObject->password;
-                $passwordConfirm = $signupObject->passwordConfirm;
+                $username = $newUser->username;
+                $email = $newUser->email;
+                $password = $newUser->password;
+                $passwordConfirm = $newUser->passwordConfirm;
+                $phoneNumber = $newUser->phoneNumber;
+                $userType = $newUser->userType;
+                
 
                 if (!empty($email) && !empty($password)) {
                     // Check if passwords are the same
@@ -43,16 +46,12 @@
                         if (!$object->isThere) {
                             $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
 
-                            $sql = "INSERT INTO users
-                                    (mail, name, password)
-                                    VALUES
-                                        ('$newUser->mail', '$newUser->name', '$passEncrypt')
-                                    ";
+                            $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
                             if ($mySQL->Query($sql, false) === TRUE) {
-                                $sql = "SELECT id, image, title, mail, name, phone FROM users WHERE mail = '$mail'";
+                                //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                                 $user = $mySQL->Query($sql, false)->fetch_object();
                                 $response['signupSuccess'] = TRUE;
-                                $response['user'] = $user;
+                                $response['success'] = "Signup completed successfully.";
                                 echo json_encode($response);
                             } else {
                                 $response['signupSuccess'] = FALSE;
