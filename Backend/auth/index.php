@@ -21,7 +21,9 @@
 
                 //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
                 if(strpos($useroremail, "@") === false){
-
+                    $chkUser = $db->Query("CALL userExists($useroremail, true, @isThere)", false);
+                    $object = $chkUser->fetch_object();
+                    if($object->isThere ==)
                 }else{
 
                 }//end of if-else useroremail

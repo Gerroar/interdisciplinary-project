@@ -6,8 +6,11 @@
     $result = $db->Query($query, false);
     
     $object = $result->fetch_object();
+    
 
-    echo ($object->isThere);
+    if ($object->isThere == 1){
+        echo "It's true";
+    }
 
     //Work successfuly , gives 1 if it's true and 0 if not
 ?>
