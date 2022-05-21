@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json; charset=UTF-8");
     include_once("../classes/db.php");
-    $db = new db(true);
+    $db = new db("localhost","root","7794CopErnico?","inter_project");
     
     //We take the action from url created at the response/fetch moment
     $action = $_GET['action'];
@@ -21,19 +21,15 @@
 
                 //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
                 if(strpos($useroremail, "@") === false){
-                    $chkUser = $db->Query("CALL userExists($useroremail, true, @isThere)", false);
-                    $object = $chkUser->fetch_object();
-                    if($object->isThere ==)
-                }else{
-
-                }//end of if-else useroremail
+                    
+                }
             }//end of if action login
         /**Login */
 
         /**Signup */
             if ($action = "signup"){
-                //Take the signup object from the body response in HandleInfoPage
-                $signupObject = json_decode(file_get_contents('php://input'));
+                //Take the new user object from the body response in HandleInfoPage
+                $newUser = json_decode(file_get_contents('php://input'));
                 //After that now we can take the info
                 $username = $signupObject->username;
                 $email = $signupObject->email;
@@ -43,13 +39,8 @@
                 if (!empty($email) && !empty($password)) {
                     // Check if passwords are the same
                     if ($password == $passwordConfirm) {
-
-                        // Check if username already exists
-                        $sql = "SELECT id FROM users WHERE mail = '$mail'";
-                        $result = $mySQL->Query($sql, false);
-
-                        // If the username does not exist, then create a new user
-                        if ($result->num_rows == 0) {
+                        // If the user does not exist, then create a new user
+                        if (!$object->isThere) {
                             $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
 
                             $sql = "INSERT INTO users
