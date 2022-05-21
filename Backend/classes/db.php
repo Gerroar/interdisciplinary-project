@@ -8,8 +8,7 @@
             protected $con;
             protected $isConnected;         
         //Variables
-
-        /**Provisional constructor, will change after uploading the project to server */
+        
         public function __construct($autoConnect = false){
             global $dbhost, $dbuser,$dbpassword, $dbname;
             if($autoConnect) {

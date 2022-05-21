@@ -410,6 +410,8 @@ CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com',
 CALL `userPosts`(4);
 
 CALL deleteUser('gerroar');
+
+CALL userExists('gerroar', true, @isThere);
 ALTER TABLE users AUTO_INCREMENT = 0;
 ALTER TABLE settings AUTO_INCREMENT = 0;
 ALTER TABLE posts AUTO_INCREMENT = 0;
