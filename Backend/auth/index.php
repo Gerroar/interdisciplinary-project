@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json; charset=UTF-8");
     include_once("../classes/db.php");
-    $db = new db("localhost","root","7794CopErnico?","inter_project");
+    $db = new db("localhost","root","1234","inter_project");
     
     //We take the action from url created at the response/fetch moment
     $action = $_GET['action'];
@@ -16,13 +16,13 @@
                 //Take the login object from the body response in HandleInfoPage
                 $loginObject = json_decode(file_get_contents('php://input'));
                 //After that now we can take the info
-                $useroremail = $loginObject->useroremail;
+                //$useroremail = $loginObject->useroremail;
                 $password = $loginObject->password;
 
                 //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
-                if(strpos($useroremail, "@") === false){
+                //if(strpos($useroremail, "@") === false){
                     
-                }
+                //}
             }//end of if action login
         /**Login */
 
@@ -43,13 +43,12 @@
                     // Check if passwords are the same
                     if ($password == $passwordConfirm) {
                         // If the user does not exist, then create a new user
-                        if (!$object->isThere) {
                             $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
 
                             $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
-                            if ($mySQL->Query($sql, false) === TRUE) {
+                            if ($db->Query($sql, false) === TRUE) {
                                 //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
-                                $user = $mySQL->Query($sql, false)->fetch_object();
+                                $user = $db->Query($sql, false)->fetch_object();
                                 $response['signupSuccess'] = TRUE;
                                 $response['success'] = "Signup completed successfully.";
                                 echo json_encode($response);
@@ -58,11 +57,6 @@
                                 $response['error'] = "Signup failed. Please try again.";
                                 echo json_encode($response);
                             }
-                        } else {
-                            $response['signupSuccess'] = FALSE;
-                            $response['error'] = "Signup failed. Username taken.";
-                            echo json_encode($response);
-                        }
                     } else {
                         $response['signupSuccess'] = FALSE;
                         $response['error'] = "Signup failed. Passwords not the same.";

@@ -3,5 +3,5 @@
     $dbhost = 'localhost';
     $dbuser = 'root';
     $dbname = 'inter_project';
-    $dbpassword = '7794CopErnico?';
+    $dbpassword = '1234';
 ?>

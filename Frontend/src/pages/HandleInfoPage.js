@@ -20,7 +20,7 @@ export default function HandleInfoPage({ setAuth }) {
      * between react and php, this URL will change when we upload the project to a server
      */
     const response = await fetch(
-      "http://localhost:8000/Backend/auth/?action=login",
+      `http://localhost:8000/backend/auth/?action=login`,
       {
         method: "POST",
         body: JSON.stringify(loginObject),
@@ -53,8 +53,9 @@ export default function HandleInfoPage({ setAuth }) {
      * between react and php, this URL will change when we upload the project to a server
      */
     const response = await fetch(
-      "http://localhost:8000/Backend/auth/?action=signup",
+      `http://localhost:8000/backend/auth/?action=signup`,
       {
+        mode: "no-cors",
         method: "POST",
         body: JSON.stringify(signupObject),
       }
