@@ -28,10 +28,6 @@ export default function HandleInfoPage({ setAuth }) {
     );
 
     const data = await response.json();
-<<<<<<< Updated upstream
-=======
-    console.log(data);
->>>>>>> Stashed changes
     if (data.error) {
       setErrorMessage(data.error);
     }//end if data.error
