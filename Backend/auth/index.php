@@ -12,6 +12,23 @@
     /**POST METHOD */
 
         /**Login */
+        /**Check if the password it's correct, if it is , it will send
+             * the info , if not , it will send an error
+             */
+            function CheckPass($pass, $usr){
+                if(password_verify($pass, $usr->u_pass)) {
+
+                    $response['authenticated'] = TRUE;
+                    $response['user'] = $usr;
+                    echo json_encode($response);
+                }else{
+                    
+                    $response['authenticated'] = FALSE;
+                    $response['error'] = "Wrong password";
+                    echo json_encode($response);
+                }//end if-else password 
+            }//end of the function
+
             if ($action = "login"){
                 //Take the login object from the body response in HandleInfoPage
                 $loginObject = json_decode(file_get_contents('php://input'));
@@ -23,7 +40,29 @@
                 //if(strpos($useroremail, "@") === false){
                     
                 //}
-            }//end of if action login
+                $chkUser = $db->Query("CALL userExists('$useroremail', true, @isThere)", false)->fetch_object();
+                    if($chkUser->isThere == 0){
+                        $response['authenticated'] = FALSE;
+                        $response['error'] = "User name doesn't exist";
+                        echo json_encode($response);
+                    }else{
+                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email = ('$useroremail')", false)->fetch_object();
+                        CheckPass($password, $user);
+                    }//end of if-else object user
+                }else{
+
+                    $chkEmail = $db->Query("CALL checkEmail($useroremail, true, @isThere)", false)->fetch_object();
+                    if($chkUser->isThere == 0){
+
+                        $response['authenticated'] = FALSE;
+                        $response['error'] = "User email doesn't exist";
+                        echo json_encode($response);
+                    }else{
+
+                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_name = '$useroremail'", false)->fetch_object();
+                        CheckPass($password, $user);
+                    }//end of if-else object email
+                }//end of if-else useroremail
         /**Login */
 
         /**Signup */
