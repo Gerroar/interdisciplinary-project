@@ -1,44 +1,73 @@
 <?php
     /** This PHP file is for connection*/
     //TERMINAL : php -S localhost:8000
-    require 'config.php';
+    //require 'config.php';
     class db {
 
         //Variables
-            protected $con;
-            protected $isConnected;         
+            public $error = null;
+            private $dbhost = 'localhost';
+            private $dbuser = 'root';
+            private $dbname = 'inter_project';
+            private $dbpassword = '7794CopErnico?';
+
+            protected $mySQL;
+            protected $isConnected = false;         
         //Variables
-        
+
         public function __construct($autoConnect = false){
-            global $dbhost, $dbuser,$dbpassword, $dbname;
-            if($autoConnect) {
-                $this->con = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
-                if ($this->con->connect_error) {
-                    $this->isConnected = false;
-                    error_log('Failed to connect to MySQL - '.$this->con->connect_error);
-                } else {
-                    $this->isConnected = true;
-                }//end if-else
-            }//end of if autoConnect
+            $this->SetDatabase($this->dbname);
+            $this->SetServer($this->dbhost, $this->dbuser, $this->dbpassword);
+
+            if($autoConnect){
+                return $this->Connect();
+            }//end of if
         }//end of the constructor
 
-        public function Close() {
-            if($this->con->close()){
-                $this->isConnected = false;
+        public function SetDatabase($dbname){
+            $this->dbname = $dbname;
+        }
+
+        public function SetServer($dbhost, $dbuser, $dbpassword){
+            $this->dbhost = $dbhost;
+            $this->dbuser = $dbuser;
+            $this->dbpassword = $dbpassword;
+        }
+
+        public function Connect(){
+            $this->mySQL = new mysqli($this->dbhost, $this->dbuser, $this->dbpassword, $this->dbname);
+
+            if(empty($this->mySQL->connect_error)){
+                $this->isConnected = true;
                 return true;
-            } else {
-                error_log("Connection already close");
+            }else{
+                $this->error = $this->mySQL->connect_error;
                 return false;
-            }//end if-else
+            }//end of the if-else
+        }
+
+        public function Close() {
+            if(!empty($this->mySQL)){
+                if($this->mySQL->close()){
+                    $this->isConnected = false;
+                    return true;
+                } else {
+                    $this->error = "Couldn't disconnect";
+                    return false;
+                }//end if-else close
+            }else{
+                $this->error = "No established connection. Couldn't disconnect";
+                return false;
+            }//end if-else empty
         }//end of close function
 
         public function Query($query, $returnAsJSON = false){
             if(!$this->isConnected) {
-                error_log("No connection established");
+                $this->error = "No connection established";
                 return false;
             }//end of if
 
-            $result = $this->con->query($query);
+            $result = $this->mySQL->query($query);
 
             if($returnAsJSON) {
 
@@ -60,7 +89,8 @@
 
                     return $result;
                 }else{
-                    error_log("Invalid SQL Query");
+
+                    $this->error = "Invalid SQL Query";
                     return false;
                 }//end if-else
             }//end if-else returnAsJSON
