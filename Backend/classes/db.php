@@ -2,6 +2,8 @@
     /** This PHP file is for connection*/
     //TERMINAL : php -S localhost:8000
     //require 'config.php';
+
+    set_error_handler(function() { });
     class db {
 
         //Variables
@@ -11,8 +13,8 @@
             private $dbname = 'inter_project';
             private $dbpassword = '1234';
 
-            protected $mySQL;
-            protected $isConnected = false;         
+            public $mySQL;
+            private $isConnected = false;         
         //Variables
 
         public function __construct($autoConnect = false){

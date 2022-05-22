@@ -15,10 +15,10 @@
     //Work successfuly , gives 1 if it's true and 0 if not
 
     $hashedpass = password_hash("hola", PASSWORD_DEFAULT);
-    if(!password_verify("adios", $hashedpass)){
+    /*if(!password_verify("adios", $hashedpass)){
         echo "enters<br/>";
-    }
+    }*/
 
-    $query2 = $db->Query("SELECT * FROM users", false)->fetch_object();
-    echo $query2->user_name;
+    $sql = "CALL `createUser`('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com',".$hashedpass.", @result)";
+    $result = $db->Query($sql,false)->fetch_object();
 ?> 

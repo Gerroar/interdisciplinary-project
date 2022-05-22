@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Methods: *");
     header("Content-Type: application/json; charset=UTF-8");
     include_once("../classes/db.php");
-    $db = new db("localhost","root","7794CopErnico?","inter_project");
+    $db = new db(true);
     
     //We take the action from url created at the response/fetch moment
     $action = $_GET['action'];
@@ -45,7 +45,7 @@
                         $response['error'] = "User name doesn't exist";
                         echo json_encode($response);
                     }else{
-                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email = ('$useroremail')", false)->fetch_object();
+                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email='$useroremail'", false)->fetch_object();
                         CheckPass($password, $user);
                     }//end of if-else object user
                 }else{

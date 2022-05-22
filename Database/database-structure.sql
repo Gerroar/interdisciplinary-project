@@ -397,6 +397,8 @@ AS
 
 /*TESTS*/
 CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
+
+CALL `deleteUser`('gerroar');
 CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
