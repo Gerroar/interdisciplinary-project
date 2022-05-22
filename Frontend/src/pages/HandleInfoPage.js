@@ -14,13 +14,13 @@ export default function HandleInfoPage({ setAuth }) {
     event.preventDefault();
     const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
     const password = event.target.password.value; //password value from input
-    const loginObject = { useroremail: useroremail, password: password }; //object that we pass to php and it's taken by php://input
+    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
      * between react and php, this URL will change when we upload the project to a server
      */
     const response = await fetch(
-      `http://localhost:8000/backend/auth/?action=login`,
+      "http://localhost:8000/Backend/auth/index.php?action=login",
       {
         method: "POST",
         body: JSON.stringify(loginObject),
@@ -28,8 +28,18 @@ export default function HandleInfoPage({ setAuth }) {
     );
 
     const data = await response.json();
+    if (data.error) {
+      setErrorMessage(data.error);
+    }//end if data.error
 
-    return data;
+    if (data.authenticated) {
+        localStorage.setItem("isAuth", true);
+        localStorage.setItem("authUser", JSON.stringify(data.user));
+        setAuth(true);
+    } else {
+        localStorage.removeItem("isAuth");
+        localStorage.removeItem("authUser");
+    }//end if-else data.authenticated
   } //end of handleSignIn
 
   async function handleSignUp(event) {
@@ -53,16 +63,15 @@ export default function HandleInfoPage({ setAuth }) {
      * between react and php, this URL will change when we upload the project to a server
      */
     const response = await fetch(
-      `http://localhost:8000/backend/auth/?action=signup`,
+      "http://localhost:8000/Backend/auth/index.php?action=signup",
       {
-        mode: "no-cors",
         method: "POST",
         body: JSON.stringify(signupObject),
       }
     );
 
     const data = await response.json();
-
+  
     return data;
   } //end of handleSignUp
 
