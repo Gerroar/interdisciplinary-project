@@ -186,7 +186,7 @@ export default function HandleInfoPage({ setAuth }) {
             >
               <option value="b">Buyer</option>
               <option value="s">Seller</option>
-              <option value="bo">Both</option>
+              <option value="t">Both</option>
             </select>
           </div>
           <button className="form__button" type="submit">
