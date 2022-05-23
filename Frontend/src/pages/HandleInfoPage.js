@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
+import { useNavigate } from "react-router-dom";
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
 
 export default function HandleInfoPage({ setAuth }) {
   //Just in case that we get an error fetching data
+  const navigate = useNavigate();
 
   async function handleSignIn(event) {
     event.preventDefault();
@@ -29,16 +30,17 @@ export default function HandleInfoPage({ setAuth }) {
     if (data.authenticated) {
       localStorage.setItem("isAuth", true);
       localStorage.setItem("authUser", JSON.stringify(data.user));
-      setAuth(true);
+      //setAuth(true);
+      navigate("/home");
     } else {
       localStorage.removeItem("isAuth");
       localStorage.removeItem("authUser");
-    } //end if-else data.authenticated
-    const stringData = JSON.stringify(data.error);
-    document.getElementById("popup-label-signin").innerHTML =
-      stringData.replaceAll('"', "");
+      const stringData = JSON.stringify(data.error);
+      document.getElementById("popup-label-signin").innerHTML =
+        stringData.replaceAll('"', "");
 
-    openSigninPopup();
+      openSigninPopup();
+    } //end if-else data.authenticated
   } //end of handleSignIn
 
   async function handleSignUp(event) {
