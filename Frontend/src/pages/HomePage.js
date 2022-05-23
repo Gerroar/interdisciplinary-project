@@ -6,7 +6,7 @@ export default function HomePage(){
 
     useEffect(() => {
         async function getPosts() {
-            const url = "http://localhost:3000/backend/posts/";
+            const url = "http://localhost:8000/backend/posts/";
             const response = await fetch(url);
             const responseData = await response.json();
             setPosts(responseData.data);

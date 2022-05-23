@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import PostForm from "../components/PostForm";
+import PostForm from "./PostForm";
 import { useState } from "react";
 
 export default function CreatePage() {

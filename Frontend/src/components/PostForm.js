@@ -21,7 +21,7 @@ export default function PostForm({ savePost, post }) {
      * handleImageChange is called every time the user chooses an image in the fire system.
      * The event is fired by the input file field in the form
      */
-    function handleImageChange(event) {
+    /*function handleImageChange(event) {
         const file = event.target.files[0];
         if (file.size < 500000) {
             // image file size must be below 0,5MB
@@ -35,7 +35,7 @@ export default function PostForm({ savePost, post }) {
             // if not below 0.5MB display an error message using the errorMessage state
             setErrorMessage("The image file is too big!");
         }
-    }
+    }*/
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -65,11 +65,6 @@ export default function PostForm({ savePost, post }) {
             <label>
                 Body
                 <input type="text" value={body || ""} placeholder="Type a body text" onChange={e => setBody(e.target.value)} />
-            </label>
-            <label>
-                Image
-                <input type="file" className="file-input" accept="image/*" onChange={handleImageChange} />
-                <img className="image-preview" src={image || imgPlaceholder} alt="Choose" onError={event => (event.target.src = imgPlaceholder)} />
             </label>
             <p className="text-error">{errorMessage}</p>
             <button type="submit">Save</button>

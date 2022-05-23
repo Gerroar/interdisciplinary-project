@@ -410,6 +410,8 @@ ALTER TABLE posts AUTO_INCREMENT = 0;
 
 CALL createPost(3, 'Test!', 'lorem ipsum', @created);
 CALL createPost(5, 'Hello world!', 'lorem ipsum', @created);
+CALL createPost(5, 'Working in progres!', 'lorem ipsum', @created);
+CALL createPost(5, 'Progres in working!', 'lorem ipsum', @created);
 CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
 CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
 SELECT @result;
