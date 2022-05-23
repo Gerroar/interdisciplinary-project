@@ -11,14 +11,22 @@
     }
 
     //$db->Close();
-    //$db = new db(true);
+    $db = new db(true);
     $result = $db->Query("SELECT * FROM users");
 
     if($result == false){
         echo $db->error;
     }else{
         $obj = $result->fetch_object();
-        echo $obj->id;
+        echo $obj->id."<br/>";
     }
+
+    $db = new db(true);
+    
+    $object = $db->Query("CALL createUser('test2', 't', null, '1234567', 'test@gmail.com', '1234567', @result)", false);
+    if($object == 1){
+        echo "Works";
+    }
+
     /**NOW WORKS */
 ?> 
