@@ -85,13 +85,12 @@
                     // Check if passwords are the same
                     if ($password == $passwordConfirm) {
                         // If the user does not exist, then create a new user
-                        if (!$object->isThere) {
+                        if (1) {
                             $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
-
+                            $db = new db(true);
                             $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
-                            if ($mySQL->Query($sql, false) === TRUE) {
+                            if ($db->Query($sql, false) === TRUE) {
                                 //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
-                                $user = $mySQL->Query($sql, false)->fetch_object();
                                 $response['signupSuccess'] = TRUE;
                                 $response['success'] = "Signup completed successfully.";
                                 echo json_encode($response);

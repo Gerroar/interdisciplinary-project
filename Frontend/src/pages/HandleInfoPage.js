@@ -14,7 +14,7 @@ export default function HandleInfoPage({ setAuth }) {
     event.preventDefault();
     const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
     const password = event.target.password.value; //password value from input
-    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
+    const loginObject = { useroremail: useroremail, password: password }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
      * between react and php, this URL will change when we upload the project to a server
@@ -30,16 +30,16 @@ export default function HandleInfoPage({ setAuth }) {
     const data = await response.json();
     if (data.error) {
       setErrorMessage(data.error);
-    }//end if data.error
+    } //end if data.error
 
     if (data.authenticated) {
-        localStorage.setItem("isAuth", true);
-        localStorage.setItem("authUser", JSON.stringify(data.user));
-        setAuth(true);
+      localStorage.setItem("isAuth", true);
+      localStorage.setItem("authUser", JSON.stringify(data.user));
+      setAuth(true);
     } else {
-        localStorage.removeItem("isAuth");
-        localStorage.removeItem("authUser");
-    }//end if-else data.authenticated
+      localStorage.removeItem("isAuth");
+      localStorage.removeItem("authUser");
+    } //end if-else data.authenticated
   } //end of handleSignIn
 
   async function handleSignUp(event) {
@@ -71,7 +71,7 @@ export default function HandleInfoPage({ setAuth }) {
     );
 
     const data = await response.json();
-  
+
     return data;
   } //end of handleSignUp
 
@@ -184,9 +184,9 @@ export default function HandleInfoPage({ setAuth }) {
               name="Type of User"
               id="userType"
             >
-              <option value="userBuyer">Buyer</option>
-              <option value="userSeller">Seller</option>
-              <option value="userHybrid">Hybrid</option>
+              <option value="b">Buyer</option>
+              <option value="s">Seller</option>
+              <option value="bo">Both</option>
             </select>
           </div>
           <button className="form__button" type="submit">
