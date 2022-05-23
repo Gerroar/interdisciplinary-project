@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
     `set_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
     `user_id` INT COMMENT 'Foreign Key',
-    `user_img` MEDIUMBLOB COMMENT 'URL of the image',
+    `user_img` TEXT COMMENT 'URL of the image',
     `user_phone` VARCHAR(31) NOT NULL COMMENT 'User Phone Number',
     `user_email` VARCHAR(320) NOT NULL COMMENT 'User Email with the max. length allowed for an email',
     `user_pass`  VARCHAR(255) NOT NULL COMMENT 'User Password',
