@@ -5,10 +5,10 @@ include_once("../classes/db.php");
 $db = new db(true);
 //include_once('../classes/mysql.php');
 
-$user = "gerroar";
-$object = $db->Query("CALL userExists('$user', true, @isThere);", false);
+$user = "13254856";
+$object = $db->Query("CALL userExists('12345678', true, @isThere)", false);
 if ($object == 1) {
-    echo "It's true<br/>";
+    echo "works";
 }
 
 //$db->Close();

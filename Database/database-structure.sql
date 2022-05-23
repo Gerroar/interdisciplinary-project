@@ -85,6 +85,8 @@ DELIMITER ;
 
 -- userExists PROCEDURE
 
+DROP PROCEDURE checkEmail;
+
 -- checkEmail PROCEDURE
 DELIMITER //
 /*REASON: Automate the process of checking if user exists by looking for the email*/
@@ -92,7 +94,7 @@ DELIMITER //
 CREATE PROCEDURE checkEmail(
     IN userEmail VARCHAR(320),
     IN showR BIT,
-    OUT isThere BIT
+    OUT emailExists BIT
 )
 BEGIN
     IF EXISTS(
@@ -100,13 +102,13 @@ BEGIN
         FROM full_user_info
         WHERE u_email = userEmail
     )THEN
-        SET isThere = 1;
+        SET emailExists = 1;
     ELSE
-        SET isThere = 0;
+        SET emailExists = 0;
     END IF;
 
     IF showR = 1 THEN
-        SELECT isThere;
+        SELECT emailExists;
     END IF;
 END//
 DELIMITER ;
@@ -156,6 +158,7 @@ DELIMITER ;
  that that user already exists , and also checks if the
  userType is correct*/
 
+DROP PROCEDURE createUser;
 DELIMITER //
 
 CREATE PROCEDURE createUser(
@@ -170,7 +173,8 @@ CREATE PROCEDURE createUser(
 BEGIN
     CALL `userExists`(userName, false, @isThere);
     CALL `correctType`(userType, @correctT);
-    IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1)) THEN
+    CALL `checkEmail`(userEmail, @emailExists);
+    IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1) AND (SELECT @emailExists = 0)) THEN
         SET result = 1;
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
 
