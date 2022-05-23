@@ -164,14 +164,14 @@ CREATE PROCEDURE createUser(
     IN userImg TEXT,
     IN userPhone VARCHAR(31),
     IN userEmail VARCHAR(320),
-    IN userPass VARCHAR(15),
-    OUT result BIT
+    IN userPass VARCHAR(255),
+    OUT result VARCHAR(200)
 )
 BEGIN
     CALL `userExists`(userName, false, @isThere);
     CALL `correctType`(userType, @correctT);
     IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1)) THEN
-        SET result = 1;
+        SET result = 'Created user successfully';
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
 
         SET @userId := (SELECT id
@@ -180,7 +180,7 @@ BEGIN
 
         INSERT INTO settings(user_id, user_img, user_phone, user_email, user_pass) VALUES(@userId, userImg, userPhone, userEmail, userPass);
     ELSE
-       SET result = 0;
+       SET result = 'User already exists.';
     END IF;
     SELECT result;
 END //

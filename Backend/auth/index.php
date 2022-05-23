@@ -87,11 +87,12 @@
                         $passEncrypt = password_hash($password, PASSWORD_DEFAULT);
                         $db = new db(true);
 
-                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passwordEncrypt', @result)";
-                        if ($db->Query($sql, false) == 1) {
+                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
+                        $querySuccess = $db->Query($sql, false);
+                        if ($querySuccess == 1) {
                             //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                             $response['signupSuccess'] = TRUE;
-                            $response['success'] = "Signup completed successfully.";
+                            $response['success'] = $querySuccess->fetch_object();
                             echo json_encode($response);    
                         } else {
                             $response['signupSuccess'] = FALSE;
