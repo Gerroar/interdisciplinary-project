@@ -80,21 +80,19 @@
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
 
-                var_dump($email);
-
-                if ($action == "signup") {
-
+                if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($phoneNumber) && !empty($userType)) {
                     // Check if passwords are the same
                     if ($password == $passwordConfirm) {
                         // If the user does not exist, then create a new user
-                        $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
+                        $passEncrypt = password_hash($password, PASSWORD_DEFAULT);
                         $db = new db(true);
-                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
-                        if ($db->Query($sql, false) === 1) {
+
+                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passwordEncrypt', @result)";
+                        if ($db->Query($sql, false) == 1) {
                             //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                             $response['signupSuccess'] = TRUE;
                             $response['success'] = "Signup completed successfully.";
-                            echo json_encode($response);
+                            echo json_encode($response);    
                         } else {
                             $response['signupSuccess'] = FALSE;
                             $response['error'] = "Signup failed. Please try again.";
@@ -107,11 +105,9 @@
                     }
                 } else {
                     $response['signupSuccess'] = FALSE;
-                    $response['error'] = "test.";
+                    $response['error'] = "Signup failed. Please fill out all fields.";
                     echo json_encode($response);
                 }
-                    $response['signupSuccess'] = FALSE;
-                    $response['success'] = "test";
 
             }//end of if action signup
         /**Signup */
