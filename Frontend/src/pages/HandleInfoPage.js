@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useNavigate } from "react-router-dom";
+import imgPlaceholder from "../assets/img/user-placeholder.jpg"
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
