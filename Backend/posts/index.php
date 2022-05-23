@@ -23,7 +23,7 @@
     if($request_method === 'POST') {
         $newPost = json_decode(file_get_contents('php://input'));
         if($newPost){
-            $sql = "CALL createPost()";
+            $sql = "CALL createPost('$newPost->uid', '$newPost->title', '$newPost->body', @created);";
             if($db->Query($sql, false)){
                 $jsonResponse['status'] = "success";
             }  else{
