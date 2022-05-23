@@ -1,32 +1,39 @@
 <?php
-    /**File just for test if everything works before using it */
-    include_once("../classes/db.php");
-    $db = new db(true);
-    //include_once('../classes/mysql.php');
 
-    $user="gerroar";
-    $object = $db->Query("CALL userExists('$user', true, @isThere);", false);
-    if ($object == 1){
-        echo "It's true<br/>";
-    }
+/**File just for test if everything works before using it */
+include_once("../classes/db.php");
+$db = new db(true);
+//include_once('../classes/mysql.php');
 
-    //$db->Close();
-    $db = new db(true);
-    $result = $db->Query("SELECT * FROM users");
+$user = "gerroar";
+$object = $db->Query("CALL userExists('$user', true, @isThere);", false);
+if ($object == 1) {
+    echo "It's true<br/>";
+}
 
-    if($result == false){
-        echo $db->error;
-    }else{
-        $obj = $result->fetch_object();
-        echo $obj->id."<br/>";
-    }
+//$db->Close();
+$db = new db(true);
+$result = $db->Query("SELECT * FROM users");
 
-    $db = new db(true);
-    
-    $object = $db->Query("CALL createUser('test2', 't', null, '1234567', 'test@gmail.com', '1234567', @result)", false);
-    if($object == 1){
-        echo "Works";
-    }
+if ($result == false) {
+    echo $db->error;
+} else {
+    $obj = $result->fetch_object();
+    echo $obj->id . "<br/>";
+}
 
-    /**NOW WORKS */
-?> 
+$db = new db(true);
+
+$username = "test2";
+$email = "test@gmail.com";
+$password = password_hash("123456", PASSWORD_DEFAULT);
+$passwordConfirm = "123456";
+$phoneNumber = "326654987";
+$userType = "t";
+
+$object = $db->Query("CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$password', @result)", false);
+if ($object == 1) {
+    echo "Works";
+}
+
+/**NOW WORKS */

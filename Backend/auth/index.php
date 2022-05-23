@@ -80,8 +80,6 @@
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
 
-                var_dump($email);
-
                 if ($action == "signup") {
 
                     // Check if passwords are the same
@@ -89,8 +87,8 @@
                         // If the user does not exist, then create a new user
                         $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
                         $db = new db(true);
-                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
-                        if ($db->Query($sql, false) === 1) {
+                        $sql = $db->Query("CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)", false);
+                        if ($sql == 1) {
                             //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                             $response['signupSuccess'] = TRUE;
                             $response['success'] = "Signup completed successfully.";
