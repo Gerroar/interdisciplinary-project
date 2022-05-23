@@ -143,3 +143,44 @@ body {
 .form__link:hover {
   text-decoration: underline;
 }
+
+.form__input-popup {
+  display: table-cell;
+  position: absolute;
+  left: 0;
+  right: 0;
+  vertical-align: middle;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 150px;
+  font-family: verdana;
+  font-size: 13px;
+  padding: 10px;
+  background-color: rgb(240, 240, 240);
+  border: 2px solid grey;
+  z-index: 100000000000000000;
+}
+
+.form__input-popup--cancel {
+  display: relative;
+  cursor: pointer;
+  margin: 0;
+  float: right;
+  height: 10px;
+  width: 14px;
+  padding: 0 0 5px 0;
+  background: url(../popup-close.png);
+  font-weight: bold;
+  font-size: 11px;
+  color: white;
+  border-radius: 3px;
+  z-index: 100000000000000000;
+}
+
+.form__input-popup-label {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
