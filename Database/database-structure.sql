@@ -134,7 +134,7 @@ BEGIN
             SET correctT = 1;
         WHEN 's' THEN
             SET correctT = 1;
-        WHEN 'bo' THEN
+        WHEN 't' THEN
             SET correctT = 1;
         ELSE
             SET correctT = 0;

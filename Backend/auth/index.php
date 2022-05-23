@@ -79,29 +79,25 @@
                 $passwordConfirm = $newUser->passwordConfirm;
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
-                
 
-                if (!empty($email) && !empty($password)) {
+                var_dump($email);
+
+                if ($action == "signup") {
+
                     // Check if passwords are the same
                     if ($password == $passwordConfirm) {
                         // If the user does not exist, then create a new user
-                        if (1) {
-                            $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
-                            $db = new db(true);
-                            $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
-                            if ($db->Query($sql, false) === TRUE) {
-                                //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
-                                $response['signupSuccess'] = TRUE;
-                                $response['success'] = "Signup completed successfully.";
-                                echo json_encode($response);
-                            } else {
-                                $response['signupSuccess'] = FALSE;
-                                $response['error'] = "Signup failed. Please try again.";
-                                echo json_encode($response);
-                            }
+                        $passEncrypt = password_hash($newUser->password, PASSWORD_DEFAULT);
+                        $db = new db(true);
+                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
+                        if ($db->Query($sql, false) === 1) {
+                            //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
+                            $response['signupSuccess'] = TRUE;
+                            $response['success'] = "Signup completed successfully.";
+                            echo json_encode($response);
                         } else {
                             $response['signupSuccess'] = FALSE;
-                            $response['error'] = "Signup failed. Username taken.";
+                            $response['error'] = "Signup failed. Please try again.";
                             echo json_encode($response);
                         }
                     } else {
@@ -111,9 +107,11 @@
                     }
                 } else {
                     $response['signupSuccess'] = FALSE;
-                    $response['error'] = "Signup failed. Please fill out all fields.";
+                    $response['error'] = "test.";
                     echo json_encode($response);
                 }
+                    $response['signupSuccess'] = FALSE;
+                    $response['success'] = "test";
 
             }//end of if action signup
         /**Signup */
