@@ -30,11 +30,11 @@
                         echo json_encode($response);
                     }else{
                         $db = new db(true);
-                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_name='$useroremail'", false)->fetch_object();
+                        $user = $db->Query("SELECT * FROM `full_user_info` WHERE `u_name`='$useroremail'", false)->fetch_object();
                         CheckPass($password, $user);
                     }//end of if-else object user
                 }else{
-                    //$db = new db(true);
+                    $db = new db(true);
                     $chkEmail = $db->Query("CALL checkEmail('$useroremail', true, @emailExists)", false);
                     if($chkEmail == 0){
 
@@ -44,7 +44,7 @@
                     }else{
 
                         $db = new db(true);
-                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email = '$useroremail'", false)->fetch_object();            
+                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email = '$useroremail'", false)->fetch_object();
                         CheckPass($password, $user);
                     }//end of if-else object email
                 }//end of if-else useroremail

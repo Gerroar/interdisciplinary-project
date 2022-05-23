@@ -426,4 +426,6 @@ ALTER TABLE users AUTO_INCREMENT = 0;
 ALTER TABLE settings AUTO_INCREMENT = 0;
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
+SELECT * FROM full_user_info WHERE u_name = 'natoraza'
+
 /*TESTS*/
