@@ -23,17 +23,8 @@ if ($result == false) {
 }
 
 $db = new db(true);
-
-$username = "test2";
-$email = "test@gmail.com";
-$password = password_hash("123456", PASSWORD_DEFAULT);
-$passwordConfirm = "123456";
-$phoneNumber = "326654987";
-$userType = "t";
-
-$object = $db->Query("CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$password', @result)", false);
-if ($object == 1) {
-    echo "Works";
+$result = $db->Query("CALL checkEmail('test@gmail.com', true, @emailExists)", false);
+if($result == 1){
+    echo "works";
 }
-
 /**NOW WORKS */
