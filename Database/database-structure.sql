@@ -113,6 +113,8 @@ DELIMITER ;
 -- checkEmail PROCEDURE
 
 -- correctType PROCEDURE
+
+DROP PROCEDURE correctType;
 DELIMITER //
 
 /*REASON : Check if the type value is the proper one
@@ -132,7 +134,7 @@ BEGIN
             SET correctT = 1;
         WHEN 's' THEN
             SET correctT = 1;
-        WHEN 'h' THEN
+        WHEN 'bo' THEN
             SET correctT = 1;
         ELSE
             SET correctT = 0;
