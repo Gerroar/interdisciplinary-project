@@ -11,7 +11,7 @@ export default function HandleInfoPage({ setAuth }) {
     event.preventDefault();
     const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
     const password = event.target.password.value; //password value from input
-    const loginObject = { useroremail: useroremail, password: password }; //object that we pass to php and it's taken by php://input
+    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
      * between react and php, this URL will change when we upload the project to a server
