@@ -13,6 +13,43 @@
 
         /**Login */
 
+        
+            if ($action == "login"){
+                //Take the login object from the body response in HandleInfoPage
+                $loginObject = json_decode(file_get_contents('php://input'));
+                //After that now we can take the info
+                $useroremail = $loginObject->useroremail;
+                $password = $loginObject->password;
+
+                //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
+                if(strpos($useroremail, "@") === false){
+                    $chkUser = $db->Query("CALL userExists('$useroremail', true, @isThere)", false);
+                    if($chkUser == 0){
+                        $response['authenticated'] = FALSE;
+                        $response['error'] = "User name doesn't exist";
+                        echo json_encode($response);
+                    }else{
+                        $db = new db(true);
+                        $user = $db->Query("SELECT * FROM `full_user_info` WHERE `u_email`='$useroremail'", false)->fetch_object();
+                        CheckPass($password, $user);
+                    }//end of if-else object user
+                }else{
+                    $db = new db(true);
+                    $chkEmail = $db->Query("CALL checkEmail($useroremail, true, @isThere)", false);
+                    if($chkEmail == 0){
+
+                        $response['authenticated'] = FALSE;
+                        $response['error'] = "User email doesn't exist";
+                        echo json_encode($response);
+                    }else{
+
+                        $db = new db(true);
+                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_name = '$useroremail'", false)->fetch_object();
+                        CheckPass($password, $user);
+                    }//end of if-else object email
+                }//end of if-else useroremail
+            }//end of if action login
+
             /**Check if the password it's correct, if it is , it will send
              * the info , if not , it will send an error
              */
@@ -29,44 +66,10 @@
                     echo json_encode($response);
                 }//end if-else password 
             }//end of the function
-
-            if ($action = "login"){
-                //Take the login object from the body response in HandleInfoPage
-                $loginObject = json_decode(file_get_contents('php://input'));
-                //After that now we can take the info
-                $useroremail = $loginObject->useroremail;
-                $password = $loginObject->password;
-
-                //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
-                if(strpos($useroremail, "@") === false){
-                    $chkUser = $db->Query("CALL userExists('$useroremail', true, @isThere)", false)->fetch_object();
-                    if($chkUser->isThere == 0){
-                        $response['authenticated'] = FALSE;
-                        $response['error'] = "User name doesn't exist";
-                        echo json_encode($response);
-                    }else{
-                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_email='$useroremail'", false)->fetch_object();
-                        CheckPass($password, $user);
-                    }//end of if-else object user
-                }else{
-
-                    $chkEmail = $db->Query("CALL checkEmail($useroremail, true, @isThere)", false)->fetch_object();
-                    if($chkUser->isThere == 0){
-
-                        $response['authenticated'] = FALSE;
-                        $response['error'] = "User email doesn't exist";
-                        echo json_encode($response);
-                    }else{
-
-                        $user = $db->Query("SELECT * FROM full_user_info WHERE u_name = '$useroremail'", false)->fetch_object();
-                        CheckPass($password, $user);
-                    }//end of if-else object email
-                }//end of if-else useroremail
-            }//end of if action login
         /**Login */
 
         /**Signup */
-            if ($action = "signup"){
+            if ($action == "signup"){
                 //Take the new user object from the body response in HandleInfoPage
                 $newUser = json_decode(file_get_contents('php://input'));
                 //After that now we can take the info

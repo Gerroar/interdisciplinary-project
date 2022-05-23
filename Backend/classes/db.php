@@ -8,10 +8,10 @@
 
         //Variables
             public $error = null;
-            private $dbhost = 'localhost';
-            private $dbuser = 'root';
-            private $dbname = 'inter_project';
-            private $dbpassword = '1234';
+            private $dbhost = "localhost";
+            private $dbuser = "root";
+            private $dbname = "inter_project";
+            private $dbpassword = "7794CopErnico?";
 
             public $mySQL;
             private $isConnected = false;         
@@ -68,7 +68,7 @@
                 $this->error = "No connection established";
                 return false;
             }//end of if
-
+            
             $result = $this->mySQL->query($query);
 
             if($returnAsJSON) {

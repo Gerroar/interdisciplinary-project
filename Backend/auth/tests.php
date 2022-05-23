@@ -2,23 +2,23 @@
     /**File just for test if everything works before using it */
     include_once("../classes/db.php");
     $db = new db(true);
-   //$query = "CALL userExists('gerroar', true, @isThere)";
-    //$result = $db->Query($query, false);
-    
-    //$object = $result->fetch_object();
-    //$object = $db->Query("CALL userExists('gerroar', true, @isThere)", false)->fetch_object();
+    //include_once('../classes/mysql.php');
 
-    /*if ($object->isThere == 1){
+    $user="gerroar";
+    $object = $db->Query("CALL userExists('$user', true, @isThere)", false);
+    if ($object == 1){
         echo "It's true<br/>";
-    }*/
+    }
 
-    //Work successfuly , gives 1 if it's true and 0 if not
+    //$db->Close();
+    $db = new db(true);
+    $result = $db->Query("SELECT * FROM users");
 
-    $hashedpass = password_hash("hola", PASSWORD_DEFAULT);
-    /*if(!password_verify("adios", $hashedpass)){
-        echo "enters<br/>";
-    }*/
-
-    $sql = "CALL `createUser`('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com',".$hashedpass.", @result)";
-    $result = $db->Query($sql,false)->fetch_object();
+    if($result == false){
+        echo $db->error;
+    }else{
+        $obj = $result->fetch_object();
+        echo $obj->id;
+    }
+    /**NOW WORKS */
 ?> 
