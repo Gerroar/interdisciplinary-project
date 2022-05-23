@@ -8,7 +8,7 @@ export default function CreatePage() {
     const navigate = useNavigate();
 
     async function createPost(newPost) {
-        newPost.uid = user.id;
+        newPost.uid = user.u_id;
 
         const url = "http://localhost:8000/backend/posts/";
         const response = await fetch(url, {
