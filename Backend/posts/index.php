@@ -15,7 +15,7 @@
             $sql = "SELECT * FROM posts WHERE id = '$postId'";
             $jsonResponse = $db->Query($sql, true);
          } else {
-            $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+            $sql = "SELECT * FROM all_posts ORDER BY post_d DESC";
             $jsonResponse = $db->Query($sql, true);
          }
     }
