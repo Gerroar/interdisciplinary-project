@@ -186,7 +186,6 @@ BEGIN
     ELSE
        SET result = 'User already exists.';
     END IF;
-    SELECT result;
 END //
 
 DELIMITER ;
@@ -427,5 +426,7 @@ ALTER TABLE settings AUTO_INCREMENT = 0;
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
 SELECT * FROM full_user_info WHERE u_name = 'natoraza'
+
+CALL checkEmail('novatuga@gmail.com', true, @emailExists);
 
 /*TESTS*/

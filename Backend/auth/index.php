@@ -92,7 +92,7 @@
                         if ($querySuccess == 1) {
                             //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                             $response['signupSuccess'] = TRUE;
-                            $response['success'] = $querySuccess->fetch_object();
+                            $response['error'] = "This user/email already exists.";
                             echo json_encode($response);    
                         } else {
                             $response['signupSuccess'] = FALSE;

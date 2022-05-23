@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useState } from "react";
-
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
 
 export default function HandleInfoPage({ setAuth }) {
   //Just in case that we get an error fetching data
-  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleSignIn(event) {
     event.preventDefault();
@@ -28,9 +25,6 @@ export default function HandleInfoPage({ setAuth }) {
     );
 
     const data = await response.json();
-    if (data.error) {
-      setErrorMessage(data.error);
-    } //end if data.error
 
     if (data.authenticated) {
       localStorage.setItem("isAuth", true);
@@ -72,7 +66,17 @@ export default function HandleInfoPage({ setAuth }) {
 
     const data = await response.json();
 
-    return data;
+    event.target.username.value = "";
+    event.target.email.value = "";
+    event.target.password.value = "";
+    event.target.passwordConfirm.value = "";
+    event.target.phoneNumber.value = "";
+    const stringData = JSON.stringify(data.error);
+    document.getElementById("popup-label").innerHTML = stringData.replaceAll(
+      '"',
+      ""
+    );
+    openPopup();
   } //end of handleSignUp
 
   return (
@@ -145,6 +149,13 @@ export default function HandleInfoPage({ setAuth }) {
             />
             <div className="form__input-error-message"></div>
           </div>
+          <div id="signupFinish" className="form__input-popup">
+            <label className="form__input-popup-label" id="popup-label" />
+            <div
+              className="form__input-popup--cancel"
+              onClick={closePopup}
+            ></div>
+          </div>
           <div className="form__input-group">
             <input
               name="password"
@@ -203,17 +214,6 @@ export default function HandleInfoPage({ setAuth }) {
   );
 }
 
-function setFormMessage(formElement, type, message) {
-  const messageElement = formElement.querySelector(".form__message");
-
-  messageElement.textContent = message;
-  messageElement.classList.remove(
-    "form__message--success",
-    "form__message--error"
-  );
-  messageElement.classList.add(`form__message--${type}`);
-}
-
 function setInputError(inputElement, message) {
   inputElement.classList.add("form__input-error");
   inputElement.parentElement.querySelector(
@@ -265,3 +265,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+function openPopup() {
+  document.getElementById("signupFinish").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("signupFinish").style.display = "none";
+}
