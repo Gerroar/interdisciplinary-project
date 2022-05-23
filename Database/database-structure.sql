@@ -171,9 +171,9 @@ CREATE PROCEDURE createUser(
     OUT result VARCHAR(200)
 )
 BEGIN
-    CALL `userExists`(userName, false, @isThere);
+    CALL `userExists`(userName, true, @isThere);
     CALL `correctType`(userType, @correctT);
-    CALL `checkEmail`(userEmail, @emailExists);
+    CALL `checkEmail`(userEmail, true, @emailExists);
     IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1) AND (SELECT @emailExists = 0)) THEN
         SET result = 'Created user successfully';
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
@@ -414,6 +414,8 @@ CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
 CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
 SELECT @result;
 CALL `deletePost`(3);
+CALL `checkEmail`('germanariasrodriguez@gmail.com', true, @emailExists);
+
 CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com', 'gerroar1234');
 CALL `userPosts`(4);
 
