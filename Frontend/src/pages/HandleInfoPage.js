@@ -1,23 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
 
 export default function HandleInfoPage({ setAuth }) {
   //Just in case that we get an error fetching data
-  const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-  //const navigate = useNavigate();
 
   async function handleSignIn(event) {
     event.preventDefault();
     const useroremail = event.target.useroremail.value; //value of posible user or posible email from input
     const password = event.target.password.value; //password value from input
-    const loginObject = {useroremail: useroremail, password: password}; //object that we pass to php and it's taken by php://input
+    const loginObject = { useroremail: useroremail, password: password }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
      * between react and php, this URL will change when we upload the project to a server
@@ -36,11 +30,15 @@ export default function HandleInfoPage({ setAuth }) {
       localStorage.setItem("isAuth", true);
       localStorage.setItem("authUser", JSON.stringify(data.user));
       setAuth(true);
-      console.log("enters");
     } else {
       localStorage.removeItem("isAuth");
       localStorage.removeItem("authUser");
     } //end if-else data.authenticated
+    const stringData = JSON.stringify(data.error);
+    document.getElementById("popup-label-signin").innerHTML =
+      stringData.replaceAll('"', "");
+
+    openSigninPopup();
   } //end of handleSignIn
 
   async function handleSignUp(event) {
@@ -79,11 +77,9 @@ export default function HandleInfoPage({ setAuth }) {
     event.target.passwordConfirm.value = "";
     event.target.phoneNumber.value = "";
     const stringData = JSON.stringify(data.error);
-    document.getElementById("popup-label").innerHTML = stringData.replaceAll(
-      '"',
-      ""
-    );
-    openPopup();
+    document.getElementById("popup-label-signup").innerHTML =
+      stringData.replaceAll('"', "");
+    openSignupPopup();
   } //end of handleSignUp
 
   return (
@@ -102,6 +98,16 @@ export default function HandleInfoPage({ setAuth }) {
               placeholder="Username or email"
             />
             <div className="form__input-error-message"></div>
+          </div>
+          <div id="signinFinish" className="form__input-popup">
+            <label
+              className="form__input-popup-label"
+              id="popup-label-signin"
+            />
+            <div
+              className="form__input-popup--cancel"
+              onClick={closeSigninPopup}
+            ></div>
           </div>
           <div className="form__input-group">
             <input
@@ -157,10 +163,13 @@ export default function HandleInfoPage({ setAuth }) {
             <div className="form__input-error-message"></div>
           </div>
           <div id="signupFinish" className="form__input-popup">
-            <label className="form__input-popup-label" id="popup-label" />
+            <label
+              className="form__input-popup-label"
+              id="popup-label-signup"
+            />
             <div
               className="form__input-popup--cancel"
-              onClick={closePopup}
+              onClick={closeSignupPopup}
             ></div>
           </div>
           <div className="form__input-group">
@@ -273,10 +282,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function openPopup() {
+function openSignupPopup() {
   document.getElementById("signupFinish").style.display = "block";
 }
 
-function closePopup() {
+function closeSignupPopup() {
   document.getElementById("signupFinish").style.display = "none";
+}
+
+function openSigninPopup() {
+  document.getElementById("signinFinish").style.display = "block";
+}
+
+function closeSigninPopup() {
+  document.getElementById("signinFinish").style.display = "none";
 }

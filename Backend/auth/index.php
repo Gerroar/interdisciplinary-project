@@ -22,11 +22,11 @@
                 $password = $loginObject->password;
 
                 //Check if we have a user or an email, we have to use === , https://www.php.net/manual/es/function.strpos.php
-                if(strpos($useroremail, "@") === false){
-                    $chkUser = $db->Query("CALL userExists('$useroremail', true, @isThere)", false);
+                if(strpos($useroremail, "@") == false){
+                    $chkUser = $db->Query("CALL userExists('$useroremail', true, @isThere)", false)->fetch_object()->isThere;
                     if($chkUser == 0){
                         $response['authenticated'] = FALSE;
-                        $response['error'] = "User name doesn't exist";
+                        $response['error'] = "User name doesn't exist in our database.";
                         echo json_encode($response);
                     }else{
                         $db = new db(true);
@@ -35,11 +35,11 @@
                     }//end of if-else object user
                 }else{
                     $db = new db(true);
-                    $chkEmail = $db->Query("CALL checkEmail('$useroremail', true, @emailExists)", false);
+                    $chkEmail = $db->Query("CALL checkEmail('$useroremail', true, @emailExists)", false)->fetch_object()->emailExists;
                     if($chkEmail == 0){
 
                         $response['authenticated'] = FALSE;
-                        $response['error'] = "User email doesn't exist";
+                        $response['error'] = "Email doesn't exist in our database.";
                         echo json_encode($response);
                     }else{
 
@@ -62,7 +62,8 @@
                 }else{
                     
                     $response['authenticated'] = FALSE;
-                    $response['error'] = "Wrong password";
+                    $db = new db(true);
+                    $response['error'] = "Incorrect password.";
                     echo json_encode($response);
                 }//end if-else password 
             }//end of the function

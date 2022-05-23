@@ -145,7 +145,7 @@ body {
 }
 
 .form__input-popup {
-  display: table-cell;
+  display: none;
   position: absolute;
   left: 0;
   right: 0;
