@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import imgPlaceholder from "../assets/img/img-placeholder.jpg";
+//import imgPlaceholder from "../assets/img/img-placeholder.jpg";
 
 export default function PostForm({ savePost, post }) {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
-    const [image, setImage] = useState("");
+    //const [image, setImage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export default function PostForm({ savePost, post }) {
             // The post object is a prop, passed from UpdatePage
             setTitle(post.title);
             setBody(post.body);
-            setImage(post.image);
+            //setImage(post.image);
         }
     }, [post]); // useEffect is called every time post changes.
 
@@ -42,11 +42,11 @@ export default function PostForm({ savePost, post }) {
         const formData = {
             // create a new objebt to hold the value from states / input fields
             title: title,
-            image: image,
+            //image: image,
             body: body
         };
 
-        const validForm = formData.title && formData.body && formData.image; // will return false if one of the properties doesn't have a value
+        const validForm = formData.title && formData.body; // will return false if one of the properties doesn't have a value.  && formData.image
         if (validForm) {
             // if all fields/ properties are filled, then call savePost
             savePost(formData);

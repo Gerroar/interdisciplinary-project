@@ -8,22 +8,22 @@ export default function CreatePage() {
     const navigate = useNavigate();
 
     async function createPost(newPost) {
-        newPost.uid = user.id; // default user id (RACE)
+        newPost.uid = user.id;
 
-        const url = "http://localhost:3000/backend/posts/";
+        const url = "http://localhost:8000/backend/posts/";
         const response = await fetch(url, {
             method: "POST",
             body: JSON.stringify(newPost)
         });
         const data = await response.json();
         console.log(data);
-        if (data.status === "success") {
+        /*if (data.status === "success") {
             navigate("/");
-        }
+        }*/
     }
 
     return (
-        <section className="page">
+        <section className="post-create">
             <h1>Create New Post</h1>
             <PostForm savePost={createPost} />
         </section>

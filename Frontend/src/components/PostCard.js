@@ -1,4 +1,5 @@
 import React from "react";
+//import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 
 export default function PostCard({ post }) {
 
@@ -6,7 +7,7 @@ export default function PostCard({ post }) {
         <article>
             <img src={post.image} alt={post.title} />
             <h2>{post.title}</h2>
-            <p>{post.body}</p>
+            <p>{post.content}</p>
         </article>
     );
 }
