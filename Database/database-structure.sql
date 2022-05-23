@@ -239,6 +239,7 @@ DELIMITER ;
 
 /*HOW IT WORKS : Creates a post from the userId*/
 
+DROP PROCEDURE createPost;
 DELIMITER //
 
 CREATE PROCEDURE createPost(
@@ -251,7 +252,7 @@ BEGIN
     SET @userType := (SELECT user_type
                       FROM users
                       WHERE id = userId);
-    IF (@userType IN ('s', 'h')) THEN
+    IF (@userType IN ('s', 't')) THEN
         INSERT INTO posts(user_id, title, content) VALUES(userId, postTitle, postContent);
         SET created = 1;
     ELSE
@@ -409,7 +410,7 @@ CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gma
 ALTER TABLE posts AUTO_INCREMENT = 0;
 
 CALL createPost(3, 'Test!', 'lorem ipsum', @created);
-CALL createPost(4, 'Hello world!', 'lorem ipsum', @created);
+CALL createPost(5, 'Hello world!', 'lorem ipsum', @created);
 CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
 CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
 SELECT @result;

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
@@ -9,6 +10,8 @@ import { useState } from "react";
 export default function HandleInfoPage({ setAuth }) {
   //Just in case that we get an error fetching data
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   async function handleSignIn(event) {
     event.preventDefault();
@@ -36,6 +39,7 @@ export default function HandleInfoPage({ setAuth }) {
       localStorage.setItem("isAuth", true);
       localStorage.setItem("authUser", JSON.stringify(data.user));
       setAuth(true);
+      console.log("enters");
     } else {
       localStorage.removeItem("isAuth");
       localStorage.removeItem("authUser");
