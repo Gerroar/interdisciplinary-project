@@ -414,6 +414,8 @@ CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
 CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
 SELECT @result;
 CALL `deletePost`(3);
+CALL `checkEmail`('germanariasrodriguez@gmail.com', true, @emailExists);
+
 CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com', 'gerroar1234');
 CALL `userPosts`(4);
 
