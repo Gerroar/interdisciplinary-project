@@ -171,9 +171,9 @@ CREATE PROCEDURE createUser(
     OUT result VARCHAR(200)
 )
 BEGIN
-    CALL `userExists`(userName, false, @isThere);
+    CALL `userExists`(userName, true, @isThere);
     CALL `correctType`(userType, @correctT);
-    CALL `checkEmail`(userEmail, @emailExists);
+    CALL `checkEmail`(userEmail, true, @emailExists);
     IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1) AND (SELECT @emailExists = 0)) THEN
         SET result = 'Created user successfully';
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
