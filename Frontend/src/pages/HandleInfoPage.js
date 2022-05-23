@@ -99,6 +99,7 @@ export default function HandleInfoPage({ setAuth }) {
               name="useroremail"
               className="form__input"
               placeholder="Username or email"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
@@ -119,6 +120,7 @@ export default function HandleInfoPage({ setAuth }) {
               name="password"
               className="form__input"
               placeholder="Password"
+              required
             />
             <div className="form__input-error-message"></div>
           </div>
