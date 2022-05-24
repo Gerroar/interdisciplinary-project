@@ -215,13 +215,13 @@ body {
 .user-menu{
   position: fixed;
   top: 18vh;
-  left:0px;
+  left: 0px;
   padding-top: 20px;
   padding-right: 90px;
   border-radius: 0px 100px 50px 0px;
   background-color: #ffffff;
   font: 500 2rem "Quicksand", sans-serif;
-  
+  animation: showUp .5s;
 }
 
 .user-management{
@@ -317,6 +317,16 @@ body {
 
   to {
       opacity: 1;
+  }
+}
+
+@keyframes showUp {
+  from {
+    left: -525px;
+  }
+
+  to {
+    left: 0px;
   }
 }
 /*Animation*/
