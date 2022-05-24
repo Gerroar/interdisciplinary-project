@@ -43,6 +43,16 @@ export default function UserMenu() {
                         Profile
                     </button>
                 </Link>
+                <Link to="/home/myposts">
+                    <button type="button">
+                        My Posts
+                    </button>
+                </Link>
+                <Link to="/home/messages">
+                    <button type="button">
+                        Messages
+                    </button>
+                </Link>
                 <PostForm savePost={createPost} />
             </section>
         );

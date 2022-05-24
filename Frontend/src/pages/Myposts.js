@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Messages(){
+export default function MyPosts(){
     return(
         <div>
         <Link to="/home">
