@@ -9,6 +9,8 @@ export default function ProfilePage({ setAuth }) {
   );
   const navigate = useNavigate();
 
+  console.log(user.name);
+
   function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
@@ -45,7 +47,7 @@ export default function ProfilePage({ setAuth }) {
   }
 
   return (
-    <body onload={loading}>
+    <body onLoad={loading}>
       <label>
         Name:
         <label id="userName" />
