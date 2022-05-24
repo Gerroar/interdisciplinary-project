@@ -93,13 +93,12 @@
                         $querySuccess = $db->Query($sql, false);
                         if ($querySuccess == 1){
                             if ($querySuccess->fetch_object()->result == 1) {
-                                //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
                                 $response['signupSuccess'] = TRUE;
                                 $response['error'] = "Signup successful.";
                                 echo json_encode($response); 
                                 } else {
                                     $response['signupSuccess'] = FALSE;
-                                    $response['error'] = "Email/user already exists.";
+                                    $response['error'] = $sql;
                                     echo json_encode($response); 
                                 }
                         } else {

@@ -46,7 +46,6 @@ export default function HandleInfoPage({ setAuth }) {
 
   async function handleSignUp(event) {
     event.preventDefault();
-    console.log(event.target);
     const username = event.target.username.value; //value of username
     const email = event.target.email.value; //value of email
     const password = event.target.password.value; //password value from input

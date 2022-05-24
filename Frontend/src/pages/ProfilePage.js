@@ -3,7 +3,6 @@ import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function ProfilePage({ setAuth }) {
-  const [errorMessage, setErrorMessage] = useState("");
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("authUser"))
   );
@@ -11,12 +10,12 @@ export default function ProfilePage({ setAuth }) {
 
   async function saveUser(event) {
     event.preventDefault();
-    console.log(event.target);
+    console.log(event.target.userimage.value);
     const username = event.target.username.value; //value of username
     const email = event.target.useremail.value; //value of username
     const phoneNumber = event.target.userphone.value;
-    const userType = event.target.userType.value;
-    const img = imgPlaceholder;
+    const userType = event.target.usertype.value;
+    const img = event.target.userimage.value;
     const userId = user.u_id;
     const userPassword = user.u_pass;
 
@@ -50,24 +49,22 @@ export default function ProfilePage({ setAuth }) {
     navigate("/");
   }
 
-  /**
-   * handleImageChange is called every time the user chooses an image in the fire system.
-   * The event is fired by the input file field in the form
-   */
   function handleImageChange(event) {
     const file = event.target.files[0];
-    if (file.size < 500000) {
-      // image file size must be below 0,5MB
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setUser((prevUser) => ({ ...prevUser, image: event.target.result }));
-      };
-      reader.readAsDataURL(file);
-      setErrorMessage(""); // reset errorMessage state
-    } else {
-      // if not below 0.5MB display an error message using the errorMessage state
-      setErrorMessage("The image file is too big!");
-    }
+    // image file size must be below 0,5MB
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      console.log("RESULT", reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    var img = document.querySelector("userImagePreview");
+
+    img.src = URL.createObjectURL(file);
+
+    console.log(reader.readAsDataURL(file));
+
+    document.getElementById("userImage").value = img.src;
   }
 
   return (
@@ -111,14 +108,20 @@ export default function ProfilePage({ setAuth }) {
         </select>
         Image
         <div className="form__input">
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input
+            name="userimage"
+            id="userImage"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
           <img
-            src={user.image || imgPlaceholder}
+            id="userImagePreview"
+            src={user.u_img || imgPlaceholder}
             alt="Choose"
             onError={(event) => (event.target.src = imgPlaceholder)}
           />
         </div>
-        <p className="text-error">{errorMessage}</p>
         <button type="submit">Save User </button>
         <button className="btn-outline" onClick={handleSignOut}>
           Sign Out
@@ -136,5 +139,6 @@ export default function ProfilePage({ setAuth }) {
     document.getElementById("userPhone").value = user.u_phone;
     let element = document.getElementById("userType");
     element.value = user.u_type;
+    document["userImagePreview"] = user.u_img;
   }
 }

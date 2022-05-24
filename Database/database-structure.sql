@@ -164,7 +164,7 @@ DELIMITER //
 CREATE PROCEDURE createUser(
     IN userName VARCHAR(150),
     IN userType CHAR(1),
-    IN userImg TEXT,
+    IN userImg MEDIUMBLOB,
     IN userPhone VARCHAR(31),
     IN userEmail VARCHAR(320),
     IN userPass VARCHAR(255),
@@ -329,7 +329,7 @@ CREATE PROCEDURE updateUserInfo(
     IN userId INT,
     IN userName VARCHAR(150),
     IN userType CHAR(1),
-    IN userImg TEXT,
+    IN userImg MEDIUMBLOB,
     IN userPhone VARCHAR(31),
     IN userEmail VARCHAR(320),
     IN userPass VARCHAR(15)
