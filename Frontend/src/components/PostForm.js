@@ -56,7 +56,7 @@ export default function PostForm({ savePost, post }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form__post">
             <label>
                 Title
                 <input type="text" value={title || ""} placeholder="Type a title" onChange={e => setTitle(e.target.value)} />
