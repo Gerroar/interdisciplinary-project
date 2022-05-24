@@ -53,6 +53,12 @@ export default function ProfilePage({ setAuth }) {
     const data = await response.json();
 
     localStorage.setItem("authUser", JSON.stringify(data.user));
+
+    const stringData = JSON.stringify(data.error);
+    document.getElementById("popup-label-signup").innerHTML =
+      stringData.replaceAll('"', "");
+
+    openEditPopup();
   }
 
   function handleSignOut() {
@@ -99,6 +105,13 @@ export default function ProfilePage({ setAuth }) {
           autoFocus
           required
         />
+        <div id="editFinish" className="form__input-popup">
+          <label className="form__input-popup-label" id="popup-label-signin" />
+          <div
+            className="form__input-popup--cancel"
+            onClick={closeEditPopup}
+          ></div>
+        </div>
         Type:
         <select className="form__dropdown" name="usertype" id="userType">
           <option value="b">Buyer</option>
@@ -139,5 +152,13 @@ export default function ProfilePage({ setAuth }) {
     document.getElementById("userPhone").value = user.u_phone;
     let element = document.getElementById("userType");
     element.value = user.u_type;
+  }
+
+  function openEditPopup() {
+    document.getElementById("editFinish").style.display = "block";
+  }
+
+  function closeEditPopup() {
+    document.getElementById("editFinish").style.display = "none";
   }
 }
