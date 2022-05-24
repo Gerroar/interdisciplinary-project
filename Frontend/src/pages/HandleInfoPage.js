@@ -52,6 +52,7 @@ export default function HandleInfoPage({ setAuth }) {
     const passwordConfirm = event.target.passwordConfirm.value; //password value from input
     const phoneNumber = event.target.phoneNumber.value;
     const userType = event.target.userType.value;
+    const img = imgPlaceholder;
     const signupObject = {
       username: username,
       email: email,
@@ -59,6 +60,7 @@ export default function HandleInfoPage({ setAuth }) {
       passwordConfirm: passwordConfirm,
       phoneNumber: phoneNumber,
       userType: userType,
+      img: img
     }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict

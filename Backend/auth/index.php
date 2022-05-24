@@ -80,6 +80,7 @@
                 $passwordConfirm = $newUser->passwordConfirm;
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
+                $img = $newUser->img;
 
                 if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($phoneNumber) && !empty($userType)) {
                     // Check if passwords are the same
@@ -88,7 +89,7 @@
                         $passEncrypt = password_hash($password, PASSWORD_DEFAULT);
                         $db = new db(true);
 
-                        $sql = "CALL createUser('$username', '$userType', null, '$phoneNumber', '$email', '$passEncrypt', @result)";
+                        $sql = "CALL createUser('$username', '$userType', '$img', '$phoneNumber', '$email', '$passEncrypt', @result)";
                         $querySuccess = $db->Query($sql, false);
                         if ($querySuccess == 1) {
                             //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
