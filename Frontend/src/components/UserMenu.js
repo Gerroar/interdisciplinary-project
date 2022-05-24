@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function UserMenu() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("authUser")));
-
+    //console.log(user);
     async function createPost(newPost) {
         newPost.uid = user.u_id;
 
@@ -14,13 +14,28 @@ export default function UserMenu() {
             body: JSON.stringify(newPost)
         });
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
     }
 
-    return (
-        <section className="post-create">
-            <h1>Create New Post</h1>
-            <PostForm savePost={createPost} />
-        </section>
-    );
+    if(user.u_type === "b"){
+
+        return (
+            <section className="user-management">
+                <img src={user.u_img} alt={user.u_name}/>
+                <h1>{user.u_name}</h1>
+                <h1>Create New Post </h1>
+                <PostForm savePost={createPost} />
+            </section>
+        );
+    }else{
+        
+        return (
+            <section className="user-management">
+                <img src={user.u_img} alt={user.u_name}/>
+                <h1>{user.u_name}</h1>
+                <h1>Create New Post </h1>
+                <PostForm savePost={createPost} />
+            </section>
+        );
+    }
 }
