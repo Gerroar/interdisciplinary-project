@@ -81,11 +81,23 @@
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
                 $img = $newUser->img;
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                //Validation of all fields and rules, phone number must be only numbers
+                if(!preg_match('/^[0-9]+$/', $phoneNumber)) {
+                    $response['signupSuccess'] = FALSE;
+                    $response['error'] = "Phone number has invalid characters.";
+                    echo json_encode($response); 
+                //Password and username must be bigger than 5 characters and smaller than 20
+                } else if (strlen($password) < 5 || strlen($password) > 20 || strlen($username) < 5 || strlen($username) > 20){
+                    $response['signupSuccess'] = FALSE;
+                    $response['error'] = "Password/Username must be between 5 and 20 characters.";
+                    echo json_encode($response); 
+                //Email must match the conditions of the filter
+                } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $response['signupSuccess'] = FALSE;
                     $response['error'] = "Wrong email format.";
                     echo json_encode($response); 
                 } else {
+                    //Check if all fields are filled
                     if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($phoneNumber) && !empty($userType)) {
                         // Check if passwords are the same
                         if ($password == $passwordConfirm) {
