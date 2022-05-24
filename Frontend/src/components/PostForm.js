@@ -65,8 +65,7 @@ export default function PostForm({ savePost, post }) {
                 Body
                 <input type="text" value={body || ""} placeholder="Type a body text" onChange={e => setBody(e.target.value)} />
             </label>
-            <p className="text-error">{errorMessage}</p>
-            <button type="submit">Save</button>
+            <button type="submit" className="user-menu-button">Post</button>
         </form>
     );
 }

@@ -35,25 +35,25 @@ export default function UserMenu() {
         
         return (
             <section className="user-management">
-                <img src={user.u_img} alt={user.u_name}/>
-                <h1>{user.u_name}</h1>
-                <Link to="/home/profile">
-                    <button className="user-menu-button" type="button">
-                        Profile
-                    </button>
-                </Link>
-                <Link to="/home/myposts">
-                    <button className="user-menu-button" type="button">
-                        My Posts
-                    </button>
-                </Link>
-                <Link to="/home/messages">
-                    <button className="user-menu-button" type="button">
-                        Messages
-                    </button>
-                </Link>
-                <h1>Create New Post </h1>
-                <PostForm savePost={createPost} />
+                <section className="user-interact">
+                    <img src={user.u_img} alt={user.u_name}/>
+                    <h1>{user.u_name}</h1>
+                    <Link to="/home/profile">
+                        <button className="user-menu-button" type="button">
+                            Profile
+                        </button>
+                    </Link>
+                    <Link to="/home/myposts">
+                        <button className="user-menu-button" type="button">
+                            My Posts
+                        </button>
+                    </Link>
+                    
+                    <section className="post-section">
+                    <h1>Create New Post </h1>
+                    <PostForm savePost={createPost} />
+                    </section>
+                </section>
             </section>
         );
     }

@@ -29,7 +29,8 @@ body {
 
 .container,
 .form__input,
-.form__button {
+.form__button,
+.post-section {
   font: 500 1rem "Quicksand", sans-serif;
 }
 
@@ -187,6 +188,9 @@ body {
 }
 
 /* HOME PAGE */
+
+
+
 .page {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -199,29 +203,44 @@ body {
 .home-posts{
   background-color: #007f67;
   overflow: auto;
-  height: 97vh;
+  height: 95vh;
   padding-right: 100%;
   margin-left: 65vh;
+  -webkit-scrollbar: none
+}
+
+.home-posts::-webkit-scrollbar{
+  display: none;
 }
 
 .user-menu{
   position: fixed;
-  top: 25vh;
+  top: 18vh;
   padding-top: 20px;
   padding-bottom: 60px;
-  padding-right: 50px;
+  padding-right: 110px;
   border-radius: 0px 100px 50px 0px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
+  
+}
+
+
+.user-management{
+  text-align: center;
+}
+
+.user-interact {
+  margin-left: 90px;
 }
 
 .user-menu img {
-    width:30%;
-    height: 110px;
+    width:40%;
+    height: 100px;
     border-radius:100px;
 }
 
 .user-menu-button {
-  width: 50%;
+  width: 80%;
   padding: 1rem 2rem;
   margin-bottom: 20px;
   font-weight: bold;
@@ -242,6 +261,20 @@ body {
   transform: scale(0.98);
 }
 
+.form__post > *{
+  display: block;
+}
+
+.form__post > button{
+  margin-left: 10%;
+  margin-top: 20px;
+}
+
+.post-section {
+  background-color: #F5F5F5;
+  width: 80%;
+  margin-left: 20px;
+}
 
 @media (max-width: 700px){
   .page{
