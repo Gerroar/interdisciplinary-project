@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import imgPlaceholder from "../assets/img/user-placeholder.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function ProfilePage({ setAuth }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -133,6 +133,11 @@ export default function ProfilePage({ setAuth }) {
       <button className="btn-outline" onClick={handleSignOut}>
         Sign Out
       </button>
+      <Link to="/home">
+          <button type="button">
+            Home
+          </button>
+      </Link>
     </section>
   );
 }

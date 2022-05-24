@@ -1,6 +1,7 @@
 import React from "react";
 import PostForm from "./PostForm";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function UserMenu() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("authUser")));
@@ -17,14 +18,17 @@ export default function UserMenu() {
         //console.log(data);
     }
 
-    if(user.u_type === "b"){
-
+    console.log(user.u_type);
+    if(user.u_type === 'b'){
         return (
             <section className="user-management">
                 <img src={user.u_img} alt={user.u_name}/>
                 <h1>{user.u_name}</h1>
-                <h1>Create New Post </h1>
-                <PostForm savePost={createPost} />
+                <Link to="/home/profile">
+                    <button type="button">
+                        Profile
+                    </button>
+                </Link>
             </section>
         );
     }else{
@@ -34,6 +38,11 @@ export default function UserMenu() {
                 <img src={user.u_img} alt={user.u_name}/>
                 <h1>{user.u_name}</h1>
                 <h1>Create New Post </h1>
+                <Link to="/home/profile">
+                    <button type="button">
+                        Profile
+                    </button>
+                </Link>
                 <PostForm savePost={createPost} />
             </section>
         );
