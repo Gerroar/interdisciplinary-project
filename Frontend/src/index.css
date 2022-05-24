@@ -4,7 +4,10 @@ body {
   --color-primary-dark: #007f67;
   --color-secondary: #252c6a;
   --color-error: #cc3333;
+  --color-error-dark: #681c1c;
   --color-success: #4bb544;
+  --color-rescued: #34cc06;
+  --color-rescued-dark: #1c6c04;
   --border-radius: 4px;
 
   margin: 0;
@@ -381,3 +384,52 @@ body {
 /*Animation*/
 
 /* HOME PAGE */
+
+/* MY POSTS*/
+.myposts-button-delete {
+  width: 200px;
+  padding: 1rem 2rem;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-error);
+}
+
+.myposts-button-delete:hover {
+  background: var(--color-error-dark);
+}
+
+.myposts-button-delete:active {
+  transform: scale(0.98);
+}
+
+.myposts-button-rescued {
+  width: 200px;
+  padding: 1rem 2rem;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-rescued);
+}
+
+.myposts-button-rescued:hover {
+  background: var(--color-rescued-dark);
+}
+
+.myposts-button-rescued:active {
+  transform: scale(0.98);
+}
+/* MY POSTS */
+

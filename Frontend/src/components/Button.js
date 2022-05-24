@@ -5,8 +5,9 @@ export default function Button({buttonName, post}) {
     const url = `http://localhost:8000/backend/posts/?id=${post.p_id}`;
     async function deletePost() {
 
-        const confirmDelete = false;
-        if(buttonName == "delete"){
+        let confirmDelete = false;
+
+        if(buttonName === "Delete"){
             confirmDelete = window.confirm(`Do you want to delete post, ${post.title}?`);
         }else{
             confirmDelete = window.confirm(`Congratulations, hero! Do you want to delete post, ${post.title}?`);
@@ -20,11 +21,22 @@ export default function Button({buttonName, post}) {
             console.log(data);
         }
     }
-    return(
-        <>
-        <button onClick={deletePost}>
-            ${buttonName}
-        </button>
-        </>
-    );
+    
+    if(buttonName === "Delete"){
+        return(
+            <>
+            <button onClick={deletePost} className="myposts-button-delete">
+                Delete
+            </button>
+            </>
+        );
+    }else{
+        return(
+            <>
+            <button onClick={deletePost} className="myposts-button-rescued">
+                Food Rescued!
+            </button>
+            </>
+        );
+    }
 }

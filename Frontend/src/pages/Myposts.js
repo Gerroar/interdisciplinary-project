@@ -25,7 +25,8 @@ export default function MyPosts(){
                 {posts.map(post => (
                     <>
                     <PostCard post={post} postId={post.p_id}/>
-                    <Button buttonName={"delete"} post={post}/>
+                    <Button buttonName={"Delete"} post={post}/>
+                    <Button buttonName={"Food Rescued !"} post={post}/>
                     </>
                 ))}
             </section>

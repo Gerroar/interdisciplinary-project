@@ -63,7 +63,7 @@
 
     if($request_method === 'DELETE' && isset($_GET['id'])) {
         $postId = $_GET['id'];
-        $sql = "DELETE FROM POSTS WHERE id = '$postId'";
+        $sql = "CALL deletePost('$postId')";
 
         if($db->Query($sql, false)){
             $jsonResponse['status'] = "success";
