@@ -47,11 +47,11 @@ export default function HandleInfoPage({ setAuth }) {
   async function handleSignUp(event) {
     event.preventDefault();
     const username = event.target.username.value; //value of username
-    const email = event.target.email.value; //value of username
+    const email = event.target.email.value; //value of email
     const password = event.target.password.value; //password value from input
-    const passwordConfirm = event.target.passwordConfirm.value; //password value from input
-    const phoneNumber = event.target.phoneNumber.value;
-    const userType = event.target.userType.value;
+    const passwordConfirm = event.target.passwordConfirm.value; //password confirm value from input
+    const phoneNumber = event.target.phoneNumber.value; //value of phone number
+    const userType = event.target.userType.value; //value of user type
     const img = imgPlaceholder;
 
     const signupObject = {
@@ -214,11 +214,7 @@ export default function HandleInfoPage({ setAuth }) {
             <div className="form__input-error-message"></div>
           </div>
           <div>
-            <select
-              className="form__dropdown"
-              name="Type of User"
-              id="userType"
-            >
+            <select className="form__dropdown" id="userType">
               <option value="b">Buyer</option>
               <option value="s">Seller</option>
               <option value="t">Both</option>
