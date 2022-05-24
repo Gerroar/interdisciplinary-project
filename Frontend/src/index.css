@@ -1,6 +1,7 @@
 
 body {
   --color-primary: #009579;
+  --color-boxes: #6db7a9;
   --color-primary-dark: #007f67;
   --color-secondary: #252c6a;
   --color-error: #cc3333;
@@ -215,11 +216,13 @@ body {
 
 .post-article{
   margin-top: 50px;
-  width: 550px;
+  width: 500px;
   padding: 15px 50px 15px 50px;
   border-radius: 20px;
   animation: fadeIn 0.5s;
   background-color: var(--color-primary);
+  font: 500 1rem "Quicksand", sans-serif;
+  color: white;
 }
 
 
@@ -229,9 +232,39 @@ body {
   border-radius:100px;
 }
 
+.post-article > #pa-div-1 {
+  background-color: var(--color-boxes);
+  padding: 20px 20px 0px 60px;
+  border-radius: 20px;
+
+}
+
+.post-article > #pa-div-1 > * {
+  display: inline-block;
+}
+
+.post-article > #pa-div-1 > h2 {
+  padding-left: 50px;
+}
+
+.post-article > h2 {
+  background-color: var(--color-boxes);
+  text-align: center;
+  padding: 20px 20px 10px 0px;
+  border-radius: 10px;
+}
+
 .post-article > #pa-div-2 {
+  background-color: var(--color-boxes);
+  text-align: center;
+  padding: 20px 20px 10px 20px;
+  border-radius: 10px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.post-article > p {
+  text-align: right;
 }
 
 .user-menu{
