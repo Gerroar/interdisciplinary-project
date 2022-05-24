@@ -20,7 +20,7 @@ export default function HomePage(){
             <section className="user-menu">        
                 <CreatePage/>
             </section>
-            <section className="grid-container" id="home-posts">
+            <section className="home-posts">
                 {posts.map(post => (
                     <PostCard post={post} key={post.id}/>
                 ))}

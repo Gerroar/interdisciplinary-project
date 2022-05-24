@@ -1,3 +1,4 @@
+
 body {
   --color-primary: #009579;
   --color-primary-dark: #007f67;
@@ -185,15 +186,37 @@ body {
   display: table-cell;
 }
 
-.page > section {
-  display: inline-block;
+/* HOME PAGE */
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  position: absolute;
+  right: 6vh;
+  top: 20px;
 }
-#home-posts{
+
+.home-posts{
   background-color: #007f67;
   overflow: auto;
-  height: 98vh;
-  width: 50%;
+  height: 97vh;
+  padding-right: 100%;
+  margin-left: 50vh;
 }
+
+.user-menu {
+  position: fixed;
+  right: 80%;
+}
+
+@media (max-width: 700px){
+  .page{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    position:fixed;
+  }
+}
+
 
 /*Animation*/
 @keyframes fadeIn {
@@ -211,3 +234,4 @@ body {
   animation: fadeIn 0.5s;
 }
 
+/* HOME PAGE */
