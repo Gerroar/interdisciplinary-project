@@ -130,13 +130,8 @@ export default function HandleInfoPage({ setAuth }) {
             Continue
           </button>
           <p className="form__text">
-            <a href="#" className="form__link">
-              Forgot your password? (Still need to make reset password page)
-            </a>
-          </p>
-          <p className="form__text">
             <a href="./" id="linkCreateAccount" className="form__link">
-              Don't have an account? Sign up here
+              Not a Hero yet? Sign up here
             </a>
           </p>
         </form>
@@ -224,7 +219,7 @@ export default function HandleInfoPage({ setAuth }) {
           </button>
           <p className="form__text">
             <a href="./" id="linkLogin" className="form__link">
-              Already have an account? Sign in
+              Already a Hero? Sign in
             </a>
           </p>
         </form>
