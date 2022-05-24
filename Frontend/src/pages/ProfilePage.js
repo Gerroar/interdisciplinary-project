@@ -15,38 +15,14 @@ export default function ProfilePage({ setAuth }) {
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const url = `http://localhost:3000/backend/users/?id=${user.id}`;
-    const userToUpdate = {
-      id: user.id,
-      name: user.name,
-      title: user.title,
-      mail: user.mail,
-      phone: user.phone,
-      image: user.image,
-    };
-    console.log(userToUpdate);
-
-    const response = await fetch(url, {
-      method: "PUT",
-      body: JSON.stringify(userToUpdate),
-    });
-    const responseObject = await response.json();
-
-    console.log(responseObject);
-
-    if (responseObject.status === "success") {
-      localStorage.setItem("authUser", JSON.stringify(responseObject.data[0]));
-    }
-  }
-
   function handleSignOut() {
     setAuth(false);
     localStorage.removeItem("isAuth");
     localStorage.removeItem("authUser");
     navigate("/sign-in");
   }
+
+  //document.getElementById("userName").innerHTML = user.name;
 
   /**
    * handleImageChange is called every time the user chooses an image in the fire system.
@@ -69,75 +45,69 @@ export default function ProfilePage({ setAuth }) {
   }
 
   return (
-    <section className="page">
-      <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            value={user.name}
-            onChange={handleChange}
-            name="name"
-            placeholder="Type name"
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            value={user.mail}
-            onChange={handleChange}
-            name="email"
-            placeholder="Type email"
-          />
-        </label>
-        <label>
-          Phone
-          <input
-            type="tel"
-            value={user.phone || ""}
-            onChange={handleChange}
-            name="phone"
-            placeholder="Type phone number"
-          />
-        </label>
-        <label>
-          Title
-          <input
-            type="text"
-            value={user.title || ""}
-            onChange={handleChange}
-            name="title"
-            placeholder="Type your title"
-          />
-        </label>
-        <label>
-          Image
-          <input
-            type="file"
-            className="file-input"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          <img
-            className="image-preview"
-            src={user.image || imgPlaceholder}
-            alt="Choose"
-            onError={(event) => (event.target.src = imgPlaceholder)}
-          />
-        </label>
-        <p className="text-error">{errorMessage}</p>
-        <button>Save User</button>
-      </form>
+    <body onload={loading}>
+      <label>
+        Name:
+        <label id="userName" />
+      </label>
+      <label>
+        Email
+        <input
+          type="email"
+          value={user.mail}
+          onChange={handleChange}
+          name="email"
+          placeholder="Type email"
+        />
+      </label>
+      <label>
+        Phone
+        <input
+          type="tel"
+          value={user.phone || ""}
+          onChange={handleChange}
+          name="phone"
+          placeholder="Type phone number"
+        />
+      </label>
+      <label>
+        Title
+        <input
+          type="text"
+          value={user.title || ""}
+          onChange={handleChange}
+          name="title"
+          placeholder="Type your title"
+        />
+      </label>
+      <label>
+        Image
+        <input
+          type="file"
+          className="file-input"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+        <img
+          className="image-preview"
+          src={user.image || imgPlaceholder}
+          alt="Choose"
+          onError={(event) => (event.target.src = imgPlaceholder)}
+        />
+      </label>
+      <p className="text-error">{errorMessage}</p>
+      <button>Save User</button>
+
       <button className="btn-outline" onClick={handleSignOut}>
         Sign Out
       </button>
       <Link to="/home">
-          <button type="button">
-            Home
-          </button>
+        <button type="button">Home</button>
       </Link>
-    </section>
+    </body>
   );
+
+  function loading() {
+    document.getElementById("userName").innerHTML = user.name;
+  }
 }
