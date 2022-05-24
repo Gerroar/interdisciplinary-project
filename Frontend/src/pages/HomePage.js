@@ -13,16 +13,18 @@ export default function HomePage(){
             setPosts(responseData.data);
         }
         getPosts();
-    }, []);
+    }, [posts]);
 
     return (
         <section className="page">
-            <section className="grid-container">
+            <section className="grid-container" id="home-posts">
                 {posts.map(post => (
-                    <PostCard post={post} key={post.id} />
+                    <PostCard post={post} key={post.id}/>
                 ))}
             </section>
-            <CreatePage/>
+            <section>        
+                <CreatePage/>
+            </section>
         </section>
     )
  }

@@ -184,3 +184,25 @@ body {
   vertical-align: middle;
   display: table-cell;
 }
+
+#home-posts{
+  background-color: #007f67;
+  overflow: auto;
+}
+
+/*Animation*/
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+}
+/*Animation*/
+
+.post-article{
+  animation: fadeIn 0.5s;
+}
+

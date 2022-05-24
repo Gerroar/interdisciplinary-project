@@ -13,7 +13,6 @@ export default function PostForm({ savePost, post }) {
             // The post object is a prop, passed from UpdatePage
             setTitle(post.title);
             setBody(post.body);
-            //setImage(post.image);
         }
     }, [post]); // useEffect is called every time post changes.
 
