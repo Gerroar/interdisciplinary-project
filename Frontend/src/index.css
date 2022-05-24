@@ -205,8 +205,7 @@ body {
   overflow: auto;
   height: 95vh;
   padding-right: 100%;
-  margin-left: 65vh;
-  -webkit-scrollbar: none
+  margin-left: 65vh;  
 }
 
 .home-posts::-webkit-scrollbar{
@@ -217,24 +216,23 @@ body {
   position: fixed;
   top: 18vh;
   padding-top: 20px;
-  padding-bottom: 60px;
-  padding-right: 110px;
+  padding-right: 90px;
   border-radius: 0px 100px 50px 0px;
   background-color: #ffffff;
+  font: 500 2rem "Quicksand", sans-serif;
   
 }
-
 
 .user-management{
   text-align: center;
 }
 
 .user-interact {
-  margin-left: 90px;
+  margin-left: 10px;
 }
 
 .user-menu img {
-    width:40%;
+    width:30%;
     height: 100px;
     border-radius:100px;
 }
@@ -261,6 +259,7 @@ body {
   transform: scale(0.98);
 }
 
+
 .form__post > *{
   display: block;
 }
@@ -272,8 +271,13 @@ body {
 
 .post-section {
   background-color: #F5F5F5;
-  width: 80%;
-  margin-left: 20px;
+  margin-left: 15px;
+  padding: 0px 100px 0px 100px;
+  border-radius: 8px;
+}
+
+.post-section h1{
+  font-size: 1.5rem;
 }
 
 @media (max-width: 700px){
