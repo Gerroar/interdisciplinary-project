@@ -20,7 +20,12 @@ export default function MyPosts(){
     }, [posts]);
 
     return (
-        <section className="page">
+        <section>
+            <Link to="/home">
+                <button className="back-home" type="button">
+                    Home
+                </button>
+            </Link>
             <section className="home-posts">
                 {posts.map(post => (
                     <>
