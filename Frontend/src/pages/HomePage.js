@@ -22,7 +22,7 @@ export default function HomePage(){
             </section>
             <section className="home-posts">
                 {posts.map(post => (
-                    <PostCard post={post} key={post.p_id}/>
+                    <PostCard post={post}/>
                 ))}
             </section>
         </section>

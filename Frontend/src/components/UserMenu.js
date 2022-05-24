@@ -22,13 +22,15 @@ export default function UserMenu() {
     if(user.u_type === 'b'){
         return (
             <section className="user-management">
-                <img src={user.u_img} alt={user.u_name}/>
-                <h1>{user.u_name}</h1>
-                <Link to="/home/profile">
-                    <button type="button">
-                        Profile
-                    </button>
-                </Link>
+                <section className="user-interact">
+                    <img src={user.u_img} alt={user.u_name}/>
+                    <h1>{user.u_name}</h1>
+                    <Link to="/home/profile">
+                        <button className="user-menu-button" type="button">
+                            Profile
+                        </button>
+                    </Link>
+                </section>
             </section>
         );
     }else{

@@ -11,8 +11,8 @@
 
     if ($request_method === 'GET') {
          if(isset($_GET['id'])) {
-            $postId = $_GET['id'];
-            $sql = "SELECT * FROM posts WHERE id = '$postId'";
+            $userId = $_GET['id'];
+            $sql = "SELECT * FROM all_posts WHERE u_id = '$userId'";
             $jsonResponse = $db->Query($sql, true);
          } else {
             $sql = "SELECT * FROM all_posts ORDER BY post_d DESC";

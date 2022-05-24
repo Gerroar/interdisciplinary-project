@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PostCard({ post }) {
+export default function PostCard({ post , postId}) {
 
     return (
         <article className="post-article">
