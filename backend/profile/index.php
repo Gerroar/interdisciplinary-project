@@ -19,8 +19,10 @@
 
     //Check that all fields are filled
     if (!empty($username) && !empty($email) && !empty($phoneNumber) && !empty($userType)) {
+        //Query the database to update the info using the stored procedure
         $sql = "CALL updateUserInfo('$userId','$username', '$userType', '$img', '$phoneNumber', '$email', null)";
         $querySuccess = $db->Query($sql, false);
+        //If query was successful send success message back, otherwise send error message back
         if ($querySuccess == 1){
             $db = new db(true);
             $user = $db->Query("SELECT * FROM `full_user_info` WHERE `u_name`='$username'", false)->fetch_object();

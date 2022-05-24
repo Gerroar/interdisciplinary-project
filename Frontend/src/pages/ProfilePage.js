@@ -16,6 +16,7 @@ export default function ProfilePage({ setAuth }) {
       const userType = event.target.usertype.value;
       const userId = user.u_id;
       const userPassword = user.u_pass;
+      //If a file was uploaded go through the file upload flow
       if (event.target.userimage.files[0] != null) {
         var img = event.target.userimage.files[0];
         fReader.readAsDataURL(event.target.userimage.files[0]);
@@ -28,6 +29,7 @@ export default function ProfilePage({ setAuth }) {
         var imgInput = document.getElementById("userImagePreview");
 
         img = imgInput.src;
+        //If no file was uploaded, use the image from the database
       } else {
         img = user.u_img;
       }
@@ -42,9 +44,6 @@ export default function ProfilePage({ setAuth }) {
         password: userPassword,
       }; //object that we pass to php and it's taken by php://input
 
-      /**Here I'm using 8000 port because I'm working with that port to avoid conflict
-       * between react and php, this URL will change when we upload the project to a server
-       */
       const response = await fetch(
         "http://localhost:8000/backend/profile/index.php",
         {
@@ -55,18 +54,21 @@ export default function ProfilePage({ setAuth }) {
 
       const data = await response.json();
 
+      //resets the authuser so that it fetches the updated data from the save
       localStorage.setItem("authUser", JSON.stringify(data.user));
 
       handleSignOut();
     }
   }
 
+  //Signs the current user out
   function handleSignOut() {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("authUser");
     navigate("/");
   }
 
+  //Process the file
   function loadFile(event) {
     var image = document.getElementById("userImagePreview");
     image.src = URL.createObjectURL(event.target.files[0]);
@@ -139,6 +141,7 @@ export default function ProfilePage({ setAuth }) {
     </section>
   );
 
+  //Load the values for the fields
   function loading() {
     document.getElementById("userName").value = user.u_name;
     document.getElementById("userEmail").value = user.u_email;
