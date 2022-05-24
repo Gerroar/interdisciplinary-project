@@ -11,12 +11,6 @@ export default function ProfilePage({ setAuth }) {
 
   console.log(user);
 
-  function handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
-  }
-
   function handleSignOut() {
     setAuth(false);
     localStorage.removeItem("isAuth");
