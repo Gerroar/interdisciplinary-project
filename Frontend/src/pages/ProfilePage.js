@@ -41,47 +41,50 @@ export default function ProfilePage({ setAuth }) {
   }
 
   return (
-    <body className="page" onLoad={loading}>
-      <label>
-        User Name:
-        <label id="userName" />
-      </label>
-      <label>
-        Email:
-        <label id="userEmail" />
-      </label>
-      <label>
-        Phone:
-        <label id="userPhone" />
-      </label>
-      <label>
-        Type:
-        <label id="userType" />
-      </label>
-      <label>
-        Image
-        <input
-          type="file"
-          className="file-input"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-        <img
-          className="image-preview"
-          src={user.image || imgPlaceholder}
-          alt="Choose"
-          onError={(event) => (event.target.src = imgPlaceholder)}
-        />
-      </label>
-      <p className="text-error">{errorMessage}</p>
-      <button>Save User</button>
-      <button className="btn-outline" onClick={handleSignOut}>
-        Sign Out
-      </button>
-      <Link to="/home">
-        <button type="button">Home</button>
-      </Link>
-    </body>
+    <section onLoad={loading}>
+      <link rel="stylesheet" href="./src/index.css"></link>
+      <div className="container">
+        <label>
+          User Name:
+          <label id="userName" />
+        </label>
+        <label>
+          Email:
+          <label id="userEmail" />
+        </label>
+        <label>
+          Phone:
+          <label id="userPhone" />
+        </label>
+        <label>
+          Type:
+          <label id="userType" />
+        </label>
+        <label>
+          Image
+          <input
+            type="file"
+            className="file-input"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          <img
+            className="image-preview"
+            src={user.image || imgPlaceholder}
+            alt="Choose"
+            onError={(event) => (event.target.src = imgPlaceholder)}
+          />
+        </label>
+        <p className="text-error">{errorMessage}</p>
+        <button>Save User</button>
+        <button className="btn-outline" onClick={handleSignOut}>
+          Sign Out
+        </button>
+        <Link to="/home">
+          <button type="button">Home</button>
+        </Link>
+      </div>
+    </section>
   );
 
   function loading() {
