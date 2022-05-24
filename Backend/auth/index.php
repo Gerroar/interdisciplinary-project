@@ -81,42 +81,47 @@
                 $phoneNumber = $newUser->phoneNumber;
                 $userType = $newUser->userType;
                 $img = $newUser->img;
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    $response['signupSuccess'] = FALSE;
+                    $response['error'] = "Wrong email format.";
+                    echo json_encode($response); 
+                } else {
+                    if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($phoneNumber) && !empty($userType)) {
+                        // Check if passwords are the same
+                        if ($password == $passwordConfirm) {
+                            // If the user does not exist, then create a new user
+                            $passEncrypt = password_hash($password, PASSWORD_DEFAULT);
+                            $db = new db(true);
 
-                if (!empty($username) && !empty($email) && !empty($password) && !empty($passwordConfirm) && !empty($phoneNumber) && !empty($userType)) {
-                    // Check if passwords are the same
-                    if ($password == $passwordConfirm) {
-                        // If the user does not exist, then create a new user
-                        $passEncrypt = password_hash($password, PASSWORD_DEFAULT);
-                        $db = new db(true);
-
-                        $sql = "CALL createUser('$username', '$userType', '$img', '$phoneNumber', '$email', '$passEncrypt', @result)";
-                        $querySuccess = $db->Query($sql, false);
-                        if ($querySuccess == 1){
-                            if ($querySuccess->fetch_object()->result == 1) {
-                                $response['signupSuccess'] = TRUE;
-                                $response['error'] = "Signup successful.";
-                                echo json_encode($response); 
-                                } else {
-                                    $response['signupSuccess'] = FALSE;
-                                    $response['error'] = "Email/user already exists.";
+                            $sql = "CALL createUser('$username', '$userType', '$img', '$phoneNumber', '$email', '$passEncrypt', @result)";
+                            $querySuccess = $db->Query($sql, false);
+                            if ($querySuccess == 1){
+                                if ($querySuccess->fetch_object()->result == 1) {
+                                    $response['signupSuccess'] = TRUE;
+                                    $response['error'] = "Signup successful.";
                                     echo json_encode($response); 
-                                }
+                                    } else {
+                                        $response['signupSuccess'] = FALSE;
+                                        $response['error'] = "Email/user already exists.";
+                                        echo json_encode($response); 
+                                    }
+                            } else {
+                                $response['signupSuccess'] = FALSE;
+                                $response['error'] = "Signup failed. Please try again.";
+                                echo json_encode($response);
+                            }
                         } else {
                             $response['signupSuccess'] = FALSE;
-                            $response['error'] = "Signup failed. Please try again.";
+                            $response['error'] = "Signup failed. Passwords not the same.";
                             echo json_encode($response);
                         }
                     } else {
                         $response['signupSuccess'] = FALSE;
-                        $response['error'] = "Signup failed. Passwords not the same.";
+                        $response['error'] = "Signup failed. Please fill out all fields.";
                         echo json_encode($response);
                     }
-                } else {
-                    $response['signupSuccess'] = FALSE;
-                    $response['error'] = "Signup failed. Please fill out all fields.";
-                    echo json_encode($response);
-                }
 
+                }
             }//end of if action signup
         /**Signup */
 
