@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useNavigate } from "react-router-dom";
-import imgPlaceholder from "../assets/img/user-placeholder.jpg"
+import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 /**We use setAuth to check in future pages that
  * the user is authenticated and is not browsing
  * the HomePage as a stranger. */
@@ -53,6 +53,7 @@ export default function HandleInfoPage({ setAuth }) {
     const phoneNumber = event.target.phoneNumber.value;
     const userType = event.target.userType.value;
     const img = imgPlaceholder;
+
     const signupObject = {
       username: username,
       email: email,
@@ -60,7 +61,7 @@ export default function HandleInfoPage({ setAuth }) {
       passwordConfirm: passwordConfirm,
       phoneNumber: phoneNumber,
       userType: userType,
-      img: img
+      img: img,
     }; //object that we pass to php and it's taken by php://input
 
     /**Here I'm using 8000 port because I'm working with that port to avoid conflict
@@ -255,8 +256,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("#login");
   const createAccountForm = document.querySelector("#createAccount");
 
-  
-  document.querySelector("#linkCreateAccount")
+  document
+    .querySelector("#linkCreateAccount")
     .addEventListener("click", (e) => {
       e.preventDefault();
       loginForm.classList.add("form--hidden");
