@@ -10,12 +10,11 @@ export default function ProfilePage({ setAuth }) {
 
   async function saveUser(event) {
     event.preventDefault();
-    console.log(event.target.userimage.value);
     const username = event.target.username.value; //value of username
     const email = event.target.useremail.value; //value of username
     const phoneNumber = event.target.userphone.value;
     const userType = event.target.usertype.value;
-    const img = event.target.userimage.value;
+    const img = imgPlaceholder;
     const userId = user.u_id;
     const userPassword = user.u_pass;
 
@@ -41,6 +40,10 @@ export default function ProfilePage({ setAuth }) {
     );
 
     const data = await response.json();
+
+    console.log(data.user);
+
+    localStorage.setItem("authUser", JSON.stringify(data.user));
   }
 
   function handleSignOut() {
