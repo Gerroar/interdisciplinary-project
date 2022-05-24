@@ -192,7 +192,7 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   position: absolute;
-  right: 6vh;
+  right: 20vh;
   top: 20px;
 }
 
@@ -201,12 +201,12 @@ body {
   overflow: auto;
   height: 97vh;
   padding-right: 100%;
-  margin-left: 50vh;
+  margin-left: 65vh;
 }
 
-.user-menu {
+.user-menu{
   position: fixed;
-  right: 80%;
+  top: 25vh;  
 }
 
 @media (max-width: 700px){

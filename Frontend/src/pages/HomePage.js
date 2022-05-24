@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
 import PostCard from "../components/PostCard";
-import CreatePage from "../components/UserMenu";
+import UserMenu from "../components/UserMenu";
 
 export default function HomePage(){
     const [posts, setPosts] = useState([]);
@@ -18,11 +18,11 @@ export default function HomePage(){
     return (
         <section className="page">
             <section className="user-menu">        
-                <CreatePage/>
+                <UserMenu/>
             </section>
             <section className="home-posts">
                 {posts.map(post => (
-                    <PostCard post={post} key={post.id}/>
+                    <PostCard post={post} key={post.p_id}/>
                 ))}
             </section>
         </section>
