@@ -52,7 +52,7 @@ export default function HandleInfoPage({ setAuth }) {
     const passwordConfirm = event.target.passwordConfirm.value; //password confirm value from input
     const phoneNumber = event.target.phoneNumber.value; //value of phone number
     const userType = event.target.userType.value; //value of user type
-    const img = imgPlaceholder;
+    const img = imgPlaceholder; //image placeholder until user adds his own
 
     const signupObject = {
       username: username,

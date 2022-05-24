@@ -7,58 +7,68 @@ export default function ProfilePage({ setAuth }) {
   const navigate = useNavigate();
 
   async function saveUser(event) {
-    var fReader = new FileReader();
-    event.preventDefault();
-    const username = event.target.username.value; //value of username
-    const email = event.target.useremail.value; //value of username
-    const phoneNumber = event.target.userphone.value;
-    const userType = event.target.usertype.value;
-    let img = event.target.userimage.files[0];
-    fReader.readAsDataURL(event.target.userimage.files[0]);
-    const userId = user.u_id;
-    const userPassword = user.u_pass;
+    if (window.confirm("Please confirm save and logout")) {
+      var fReader = new FileReader();
+      event.preventDefault();
+      const username = event.target.username.value; //value of username
+      const email = event.target.useremail.value; //value of username
+      const phoneNumber = event.target.userphone.value;
+      const userType = event.target.usertype.value;
+      const userId = user.u_id;
+      const userPassword = user.u_pass;
+      //If a file was uploaded go through the file upload flow
+      if (event.target.userimage.files[0] != null) {
+        var img = event.target.userimage.files[0];
+        fReader.readAsDataURL(event.target.userimage.files[0]);
 
-    fReader.onloadend = function (event) {
-      var imgInput = document.getElementById("userImagePreview");
-      imgInput.src = event.target.result;
-    };
+        fReader.onloadend = function (event) {
+          var imgInput = document.getElementById("userImagePreview");
+          imgInput.src = event.target.result;
+        };
 
-    var imgInput = document.getElementById("userImagePreview");
+        var imgInput = document.getElementById("userImagePreview");
 
-    img = imgInput.src;
-
-    const editUserObject = {
-      userId: userId,
-      username: username,
-      email: email,
-      phoneNumber: phoneNumber,
-      userType: userType,
-      img: img,
-      password: userPassword,
-    }; //object that we pass to php and it's taken by php://input
-
-    /**Here I'm using 8000 port because I'm working with that port to avoid conflict
-     * between react and php, this URL will change when we upload the project to a server
-     */
-    const response = await fetch(
-      "http://localhost:8000/backend/profile/index.php",
-      {
-        method: "POST",
-        body: JSON.stringify(editUserObject),
+        img = imgInput.src;
+        //If no file was uploaded, use the image from the database
+      } else {
+        img = user.u_img;
       }
-    );
 
-    const data = await response.json();
+      const editUserObject = {
+        userId: userId,
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
+        userType: userType,
+        img: img,
+        password: userPassword,
+      }; //object that we pass to php and it's taken by php://input
 
-    localStorage.setItem("authUser", JSON.stringify(data.user));
+      const response = await fetch(
+        "http://localhost:8000/backend/profile/index.php",
+        {
+          method: "POST",
+          body: JSON.stringify(editUserObject),
+        }
+      );
+
+      const data = await response.json();
+
+      //resets the authuser so that it fetches the updated data from the save
+      localStorage.setItem("authUser", JSON.stringify(data.user));
+
+      handleSignOut();
+    }
   }
 
+  //Signs the current user out
   function handleSignOut() {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("authUser");
     navigate("/");
   }
 
+  //Process the file
   function loadFile(event) {
     var image = document.getElementById("userImagePreview");
     image.src = URL.createObjectURL(event.target.files[0]);
@@ -131,6 +141,7 @@ export default function ProfilePage({ setAuth }) {
     </section>
   );
 
+  //Load the values for the fields
   function loading() {
     document.getElementById("userName").value = user.u_name;
     document.getElementById("userEmail").value = user.u_email;
