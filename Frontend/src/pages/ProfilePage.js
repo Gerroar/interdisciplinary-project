@@ -7,50 +7,58 @@ export default function ProfilePage({ setAuth }) {
   const navigate = useNavigate();
 
   async function saveUser(event) {
-    var fReader = new FileReader();
-    event.preventDefault();
-    const username = event.target.username.value; //value of username
-    const email = event.target.useremail.value; //value of username
-    const phoneNumber = event.target.userphone.value;
-    const userType = event.target.usertype.value;
-    let img = event.target.userimage.files[0];
-    fReader.readAsDataURL(event.target.userimage.files[0]);
-    const userId = user.u_id;
-    const userPassword = user.u_pass;
+    if (window.confirm("Please confirm save and logout")) {
+      var fReader = new FileReader();
+      event.preventDefault();
+      const username = event.target.username.value; //value of username
+      const email = event.target.useremail.value; //value of username
+      const phoneNumber = event.target.userphone.value;
+      const userType = event.target.usertype.value;
+      const userId = user.u_id;
+      const userPassword = user.u_pass;
+      if (event.target.userimage.files[0] != null) {
+        var img = event.target.userimage.files[0];
+        fReader.readAsDataURL(event.target.userimage.files[0]);
 
-    fReader.onloadend = function (event) {
-      var imgInput = document.getElementById("userImagePreview");
-      imgInput.src = event.target.result;
-    };
+        fReader.onloadend = function (event) {
+          var imgInput = document.getElementById("userImagePreview");
+          imgInput.src = event.target.result;
+        };
 
-    var imgInput = document.getElementById("userImagePreview");
+        var imgInput = document.getElementById("userImagePreview");
 
-    img = imgInput.src;
-
-    const editUserObject = {
-      userId: userId,
-      username: username,
-      email: email,
-      phoneNumber: phoneNumber,
-      userType: userType,
-      img: img,
-      password: userPassword,
-    }; //object that we pass to php and it's taken by php://input
-
-    /**Here I'm using 8000 port because I'm working with that port to avoid conflict
-     * between react and php, this URL will change when we upload the project to a server
-     */
-    const response = await fetch(
-      "http://localhost:8000/backend/profile/index.php",
-      {
-        method: "POST",
-        body: JSON.stringify(editUserObject),
+        img = imgInput.src;
+      } else {
+        img = user.u_img;
       }
-    );
 
-    const data = await response.json();
+      const editUserObject = {
+        userId: userId,
+        username: username,
+        email: email,
+        phoneNumber: phoneNumber,
+        userType: userType,
+        img: img,
+        password: userPassword,
+      }; //object that we pass to php and it's taken by php://input
 
-    localStorage.setItem("authUser", JSON.stringify(data.user));
+      /**Here I'm using 8000 port because I'm working with that port to avoid conflict
+       * between react and php, this URL will change when we upload the project to a server
+       */
+      const response = await fetch(
+        "http://localhost:8000/backend/profile/index.php",
+        {
+          method: "POST",
+          body: JSON.stringify(editUserObject),
+        }
+      );
+
+      const data = await response.json();
+
+      localStorage.setItem("authUser", JSON.stringify(data.user));
+
+      handleSignOut();
+    }
   }
 
   function handleSignOut() {
