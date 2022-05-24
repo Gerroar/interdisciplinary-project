@@ -9,14 +9,25 @@ export default function ProfilePage({ setAuth }) {
   const navigate = useNavigate();
 
   async function saveUser(event) {
+    var fReader = new FileReader();
     event.preventDefault();
     const username = event.target.username.value; //value of username
     const email = event.target.useremail.value; //value of username
     const phoneNumber = event.target.userphone.value;
     const userType = event.target.usertype.value;
-    const img = imgPlaceholder;
+    let img = event.target.userimage.files[0];
+    fReader.readAsDataURL(event.target.userimage.files[0]);
     const userId = user.u_id;
     const userPassword = user.u_pass;
+
+    fReader.onloadend = function (event) {
+      var imgInput = document.getElementById("userImagePreview");
+      imgInput.src = event.target.result;
+    };
+
+    var imgInput = document.getElementById("userImagePreview");
+
+    img = imgInput.src;
 
     const editUserObject = {
       userId: userId,
@@ -41,8 +52,6 @@ export default function ProfilePage({ setAuth }) {
 
     const data = await response.json();
 
-    console.log(data.user);
-
     localStorage.setItem("authUser", JSON.stringify(data.user));
   }
 
@@ -50,6 +59,11 @@ export default function ProfilePage({ setAuth }) {
     localStorage.removeItem("isAuth");
     localStorage.removeItem("authUser");
     navigate("/");
+  }
+
+  function loadFile(event) {
+    var image = document.getElementById("userImagePreview");
+    image.src = URL.createObjectURL(event.target.files[0]);
   }
 
   return (
@@ -93,8 +107,15 @@ export default function ProfilePage({ setAuth }) {
         </select>
         Image
         <div className="form__input">
-          <input name="userimage" id="userImage" type="file" accept="image/*" />
+          <input
+            name="userimage"
+            id="userImage"
+            type="file"
+            accept="image/*"
+            onChange={loadFile}
+          />
           <img
+            className="form__image"
             id="userImagePreview"
             src={user.u_img || imgPlaceholder}
             alt="Choose"
