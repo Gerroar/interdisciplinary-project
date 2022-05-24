@@ -201,15 +201,37 @@ body {
 }
 
 .home-posts{
-  background-color: #007f67;
+  
   overflow: auto;
   height: 95vh;
   padding-right: 100%;
-  margin-left: 65vh;  
+  margin-left: 73vh; 
+  
 }
 
 .home-posts::-webkit-scrollbar{
   display: none;
+}
+
+.post-article{
+  margin-top: 50px;
+  width: 550px;
+  padding: 15px 50px 15px 50px;
+  border-radius: 20px;
+  animation: fadeIn 0.5s;
+  background-color: var(--color-primary);
+}
+
+
+.post-article img {
+  width:120px;
+  height: 98px;
+  border-radius:100px;
+}
+
+.post-article > #pa-div-2 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .user-menu{
@@ -331,8 +353,6 @@ body {
 }
 /*Animation*/
 
-.post-article{
-  animation: fadeIn 0.5s;
-}
+
 
 /* HOME PAGE */
