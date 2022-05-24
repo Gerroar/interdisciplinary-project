@@ -175,7 +175,6 @@ BEGIN
     CALL `correctType`(userType, @correctT);
     CALL `checkEmail`(userEmail, true, @emailExists);
     IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1) AND (SELECT @emailExists = 0)) THEN
-        SET result = 'Created user successfully';
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
 
         SET @userId := (SELECT id
@@ -183,8 +182,9 @@ BEGIN
                        WHERE user_name = userName);
 
         INSERT INTO settings(user_id, user_img, user_phone, user_email, user_pass) VALUES(@userId, userImg, userPhone, userEmail, userPass);
+        SELECT @result = 'Created user successfully';
     ELSE
-       SET result = 'User already exists.';
+       SELECT @result = 'User/email already exists.';
     END IF;
 END //
 

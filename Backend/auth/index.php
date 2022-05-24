@@ -91,11 +91,17 @@
 
                         $sql = "CALL createUser('$username', '$userType', '$img', '$phoneNumber', '$email', '$passEncrypt', @result)";
                         $querySuccess = $db->Query($sql, false);
-                        if ($querySuccess == 1) {
-                            //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
-                            $response['signupSuccess'] = TRUE;
-                            $response['error'] = "This user/email already exists.";
-                            echo json_encode($response);    
+                        if ($querySuccess == 1){
+                            if ($querySuccess->fetch_object()->isThere == 0) {
+                                //$sql = "SELECT user_id, user_img, user_phone, user_email, user_pass FROM settings WHERE ";
+                                $response['signupSuccess'] = TRUE;
+                                $response['error'] = "Signup successful.";
+                                echo json_encode($response); 
+                                } else {
+                                    $response['signupSuccess'] = FALSE;
+                                    $response['error'] = "User/email already exists.";
+                                    echo json_encode($response); 
+                                }
                         } else {
                             $response['signupSuccess'] = FALSE;
                             $response['error'] = "Signup failed. Please try again.";
