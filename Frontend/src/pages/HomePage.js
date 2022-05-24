@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import UserMenu from "../components/UserMenu";
+import Button from "../components/Button";
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
@@ -23,7 +24,10 @@ export default function HomePage() {
       </section>
       <section className="home-posts">
         {posts.map((post) => (
+          <>
           <PostCard post={post} />
+          <Button buttonName={"Rescue Food!"} post={post}/>
+          </>
         ))}
       </section>
     </section>
