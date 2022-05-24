@@ -9,7 +9,7 @@ export default function ProfilePage({ setAuth }) {
   );
   const navigate = useNavigate();
 
-  console.log(user.name);
+  console.log(user);
 
   function handleChange(event) {
     const name = event.target.name;
@@ -47,40 +47,22 @@ export default function ProfilePage({ setAuth }) {
   }
 
   return (
-    <body onLoad={loading}>
+    <body className="page" onLoad={loading}>
       <label>
-        Name:
+        User Name:
         <label id="userName" />
       </label>
       <label>
-        Email
-        <input
-          type="email"
-          value={user.mail}
-          onChange={handleChange}
-          name="email"
-          placeholder="Type email"
-        />
+        Email:
+        <label id="userEmail" />
       </label>
       <label>
-        Phone
-        <input
-          type="tel"
-          value={user.phone || ""}
-          onChange={handleChange}
-          name="phone"
-          placeholder="Type phone number"
-        />
+        Phone:
+        <label id="userPhone" />
       </label>
       <label>
-        Title
-        <input
-          type="text"
-          value={user.title || ""}
-          onChange={handleChange}
-          name="title"
-          placeholder="Type your title"
-        />
+        Type:
+        <label id="userType" />
       </label>
       <label>
         Image
@@ -99,7 +81,6 @@ export default function ProfilePage({ setAuth }) {
       </label>
       <p className="text-error">{errorMessage}</p>
       <button>Save User</button>
-
       <button className="btn-outline" onClick={handleSignOut}>
         Sign Out
       </button>
@@ -110,6 +91,9 @@ export default function ProfilePage({ setAuth }) {
   );
 
   function loading() {
-    document.getElementById("userName").innerHTML = user.name;
+    document.getElementById("userName").innerHTML = user.u_name;
+    document.getElementById("userEmail").innerHTML = user.u_email;
+    document.getElementById("userPhone").innerHTML = user.u_phone;
+    document.getElementById("userType").innerHTML = user.u_type;
   }
 }
