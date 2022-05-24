@@ -169,11 +169,12 @@ CREATE PROCEDURE createUser(
     IN userEmail VARCHAR(320),
     IN userPass VARCHAR(255),
     OUT result VARCHAR(200)
+    
 )
 BEGIN
-    CALL `userExists`(userName, true, @isThere);
     CALL `correctType`(userType, @correctT);
-    CALL `checkEmail`(userEmail, true, @emailExists);
+    CALL `checkEmail`(userEmail, false, @emailExists);
+    CALL `userExists`(userName, false, @isThere);
     IF ((SELECT @isThere = 0) AND (SELECT @correctT = 1) AND (SELECT @emailExists = 0)) THEN
         INSERT INTO users(user_name, user_type) VALUES(LOWER(userName), LOWER(userType));
 
@@ -182,9 +183,11 @@ BEGIN
                        WHERE user_name = userName);
 
         INSERT INTO settings(user_id, user_img, user_phone, user_email, user_pass) VALUES(@userId, userImg, userPhone, userEmail, userPass);
-        SELECT @result = 'Created user successfully';
+        SET result = 1;
+        SELECT result;
     ELSE
-       SELECT @result = 'User/email already exists.';
+        SET result = 0;
+        SELECT result;
     END IF;
 END //
 
