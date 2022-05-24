@@ -21,8 +21,10 @@ export default function Button({buttonName, post}) {
         }
     }
     return(
+        <>
         <button onClick={deletePost}>
             ${buttonName}
         </button>
+        </>
     );
 }

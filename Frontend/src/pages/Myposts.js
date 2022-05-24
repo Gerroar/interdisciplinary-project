@@ -23,8 +23,10 @@ export default function MyPosts(){
         <section className="page">
             <section className="home-posts">
                 {posts.map(post => (
+                    <>
                     <PostCard post={post} postId={post.p_id}/>
                     <Button buttonName={"delete"} post={post}/>
+                    </>
                 ))}
             </section>
         </section>
