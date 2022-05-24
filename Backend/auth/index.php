@@ -98,7 +98,7 @@
                                 echo json_encode($response); 
                                 } else {
                                     $response['signupSuccess'] = FALSE;
-                                    $response['error'] = $sql;
+                                    $response['error'] = "Email/user already exists.";
                                     echo json_encode($response); 
                                 }
                         } else {

@@ -49,24 +49,6 @@ export default function ProfilePage({ setAuth }) {
     navigate("/");
   }
 
-  function handleImageChange(event) {
-    const file = event.target.files[0];
-    // image file size must be below 0,5MB
-    const reader = new FileReader();
-    reader.onloadend = function () {
-      console.log("RESULT", reader.result);
-    };
-    reader.readAsDataURL(file);
-
-    var img = document.querySelector("userImagePreview");
-
-    img.src = URL.createObjectURL(file);
-
-    console.log(reader.readAsDataURL(file));
-
-    document.getElementById("userImage").value = img.src;
-  }
-
   return (
     <section onLoad={loading}>
       <link rel="stylesheet" href="./src/index.css"></link>
@@ -108,13 +90,7 @@ export default function ProfilePage({ setAuth }) {
         </select>
         Image
         <div className="form__input">
-          <input
-            name="userimage"
-            id="userImage"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+          <input name="userimage" id="userImage" type="file" accept="image/*" />
           <img
             id="userImagePreview"
             src={user.u_img || imgPlaceholder}
@@ -139,6 +115,5 @@ export default function ProfilePage({ setAuth }) {
     document.getElementById("userPhone").value = user.u_phone;
     let element = document.getElementById("userType");
     element.value = user.u_type;
-    document["userImagePreview"] = user.u_img;
   }
 }
