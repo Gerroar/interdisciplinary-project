@@ -22,8 +22,11 @@
         $sql = "CALL updateUserInfo('$userId','$username', '$userType', '$img', '$phoneNumber', '$email', null)";
         $querySuccess = $db->Query($sql, false);
         if ($querySuccess == 1){
+            $db = new db(true);
+            $user = $db->Query("SELECT * FROM `full_user_info` WHERE `u_name`='$username'", false)->fetch_object();
             $response['editSuccess'] = TRUE;
-            $response['error'] = "User edited successfully.";
+            $response['error'] = $img;
+            $response['user'] = $user;
             echo json_encode($response);
         } else {
             $response['editSuccess'] = FALSE;
