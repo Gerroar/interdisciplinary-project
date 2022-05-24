@@ -324,6 +324,7 @@ DELIMITER ;
   because that field cannot be passed as null, after that we update the
   users info, and we check if 'userPass' have any value, if not, we use
   the old password, if it have it, we just pass the new password*/
+
 DELIMITER //
 CREATE PROCEDURE updateUserInfo(
     IN userId INT,

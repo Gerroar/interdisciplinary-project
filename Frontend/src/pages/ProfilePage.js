@@ -40,7 +40,12 @@ export default function ProfilePage({ setAuth }) {
       }
     );
 
-    const data = await response.json();
+    const responseObject = await response.json();
+
+    console.log("From Profilepage "+responseObject);
+    if(responseObject.status === "success"){
+      localStorage.setItem("authUser", JSON.stringify(responseObject.data[0]));
+    }
   }
 
   function handleSignOut() {
