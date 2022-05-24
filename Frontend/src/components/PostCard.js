@@ -5,7 +5,7 @@ export default function PostCard({ post }) {
 
     return (
         <article>
-            <img src={post.image} alt={post.title} />
+            <img src={post.img} alt={post.title} />
             <h2>{post.title}</h2>
             <p>{post.content}</p>
         </article>
