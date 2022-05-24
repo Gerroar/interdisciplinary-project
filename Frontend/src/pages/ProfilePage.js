@@ -11,10 +11,10 @@ export default function ProfilePage({ setAuth }) {
 
   async function saveUser(event) {
     event.preventDefault();
-    console.log(event.target.username);
+    console.log(event.target);
     const username = event.target.username.value; //value of username
-    const email = event.target.email.value; //value of username
-    const phoneNumber = event.target.phoneNumber.value;
+    const email = event.target.useremail.value; //value of username
+    const phoneNumber = event.target.userphone.value;
     const userType = event.target.userType.value;
     const img = imgPlaceholder;
     const userId = user.u_id;
@@ -34,7 +34,7 @@ export default function ProfilePage({ setAuth }) {
      * between react and php, this URL will change when we upload the project to a server
      */
     const response = await fetch(
-      "http://localhost:8000/Backend/auth/index.php?action=signup",
+      "http://localhost:8000/backend/profile/index.php",
       {
         method: "POST",
         body: JSON.stringify(editUserObject),
@@ -73,7 +73,7 @@ export default function ProfilePage({ setAuth }) {
   return (
     <section onLoad={loading}>
       <link rel="stylesheet" href="./src/index.css"></link>
-      <div className="container">
+      <form className="form" onSubmit={saveUser}>
         User Name
         <input
           type="text"
@@ -98,7 +98,7 @@ export default function ProfilePage({ setAuth }) {
         <input
           type="tel"
           className="form__input"
-          name="userPhone"
+          name="userphone"
           id="userPhone"
           autoFocus
           required
@@ -119,14 +119,14 @@ export default function ProfilePage({ setAuth }) {
           />
         </div>
         <p className="text-error">{errorMessage}</p>
-        <button onClick={saveUser}>Save User </button>
+        <button type="submit">Save User </button>
         <button className="btn-outline" onClick={handleSignOut}>
           Sign Out
         </button>
         <Link to="/home">
           <button type="button">Home</button>
         </Link>
-      </div>
+      </form>
     </section>
   );
 
