@@ -215,6 +215,7 @@ body {
 .user-menu{
   position: fixed;
   top: 18vh;
+  left:0px;
   padding-top: 20px;
   padding-right: 90px;
   border-radius: 0px 100px 50px 0px;
@@ -225,6 +226,13 @@ body {
 
 .user-management{
   text-align: center;
+}
+
+.user-management h1{
+  font-size: 1.5rem;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  padding-top: 15px;
 }
 
 .user-interact {
@@ -266,7 +274,21 @@ body {
 
 .form__post > button{
   margin-left: 10%;
-  margin-top: 20px;
+  margin-top: 5px;
+}
+
+.form__post > label{
+  padding-top: 15px;
+}
+
+.form__post > label > *{
+  margin-top: 15px;
+}
+
+.form__post > label > textarea {
+  width: 203px;
+  height: 92px;
+  resize: none;
 }
 
 .post-section {
@@ -276,9 +298,7 @@ body {
   border-radius: 8px;
 }
 
-.post-section h1{
-  font-size: 1.5rem;
-}
+
 
 @media (max-width: 700px){
   .page{

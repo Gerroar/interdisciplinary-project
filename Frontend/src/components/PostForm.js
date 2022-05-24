@@ -58,11 +58,11 @@ export default function PostForm({ savePost, post }) {
     return (
         <form onSubmit={handleSubmit} className="form__post">
             <label>
-                Title
+                Title<br/>
                 <input type="text" value={title || ""} placeholder="Type a title" onChange={e => setTitle(e.target.value)} />
             </label>
             <label>
-                Body
+                Body<br/>
                 <textarea value={body || ""} placeholder="Type a body text" onChange={e => setBody(e.target.value)} />
             </label>
             <button type="submit" className="user-menu-button">Post</button>
