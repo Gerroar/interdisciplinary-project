@@ -9,16 +9,46 @@ export default function ProfilePage({ setAuth }) {
   );
   const navigate = useNavigate();
 
-  console.log(user);
+  async function saveUser(event) {
+    event.preventDefault();
+    console.log(event.target.username);
+    const username = event.target.username.value; //value of username
+    const email = event.target.email.value; //value of username
+    const phoneNumber = event.target.phoneNumber.value;
+    const userType = event.target.userType.value;
+    const img = imgPlaceholder;
+    const userId = user.u_id;
+    const userPassword = user.u_pass;
 
-  function handleSignOut() {
-    setAuth(false);
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("authUser");
-    navigate("/sign-in");
+    const editUserObject = {
+      userId: userId,
+      username: username,
+      email: email,
+      phoneNumber: phoneNumber,
+      userType: userType,
+      img: img,
+      password: userPassword,
+    }; //object that we pass to php and it's taken by php://input
+
+    /**Here I'm using 8000 port because I'm working with that port to avoid conflict
+     * between react and php, this URL will change when we upload the project to a server
+     */
+    const response = await fetch(
+      "http://localhost:8000/Backend/auth/index.php?action=signup",
+      {
+        method: "POST",
+        body: JSON.stringify(editUserObject),
+      }
+    );
+
+    const data = await response.json();
   }
 
-  //document.getElementById("userName").innerHTML = user.name;
+  function handleSignOut() {
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("authUser");
+    navigate("/");
+  }
 
   /**
    * handleImageChange is called every time the user chooses an image in the fire system.
@@ -44,39 +74,52 @@ export default function ProfilePage({ setAuth }) {
     <section onLoad={loading}>
       <link rel="stylesheet" href="./src/index.css"></link>
       <div className="container">
-        <label>
-          User Name:
-          <label id="userName" />
-        </label>
-        <label>
-          Email:
-          <label id="userEmail" />
-        </label>
-        <label>
-          Phone:
-          <label id="userPhone" />
-        </label>
-        <label>
-          Type:
-          <label id="userType" />
-        </label>
-        <label>
-          Image
-          <input
-            type="file"
-            className="file-input"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+        User Name
+        <input
+          type="text"
+          className="form__input"
+          name="username"
+          id="userName"
+          autoFocus
+          required
+        />
+        <div className="form__input-error-message"></div>
+        Email
+        <input
+          type="text"
+          className="form__input"
+          name="useremail"
+          id="userEmail"
+          autoFocus
+          required
+        />
+        <div className="form__input-error-message"></div>
+        Phone:
+        <input
+          type="tel"
+          className="form__input"
+          name="userPhone"
+          id="userPhone"
+          autoFocus
+          required
+        />
+        Type:
+        <select className="form__dropdown" name="usertype" id="userType">
+          <option value="b">Buyer</option>
+          <option value="s">Seller</option>
+          <option value="t">Both</option>
+        </select>
+        Image
+        <div className="form__input">
+          <input type="file" accept="image/*" onChange={handleImageChange} />
           <img
-            className="image-preview"
             src={user.image || imgPlaceholder}
             alt="Choose"
             onError={(event) => (event.target.src = imgPlaceholder)}
           />
-        </label>
+        </div>
         <p className="text-error">{errorMessage}</p>
-        <button>Save User</button>
+        <button onClick={saveUser}>Save User </button>
         <button className="btn-outline" onClick={handleSignOut}>
           Sign Out
         </button>
@@ -88,9 +131,10 @@ export default function ProfilePage({ setAuth }) {
   );
 
   function loading() {
-    document.getElementById("userName").innerHTML = user.u_name;
-    document.getElementById("userEmail").innerHTML = user.u_email;
-    document.getElementById("userPhone").innerHTML = user.u_phone;
-    document.getElementById("userType").innerHTML = user.u_type;
+    document.getElementById("userName").value = user.u_name;
+    document.getElementById("userEmail").value = user.u_email;
+    document.getElementById("userPhone").value = user.u_phone;
+    let element = document.getElementById("userType");
+    element.value = user.u_type;
   }
 }

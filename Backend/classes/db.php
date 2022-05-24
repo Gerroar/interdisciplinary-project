@@ -11,7 +11,7 @@
             private $dbhost = "localhost";
             private $dbuser = "root";
             private $dbname = "inter_project";
-            private $dbpassword = "7794CopErnico?";
+            private $dbpassword = "1234";
 
             public $mySQL;
             private $isConnected = false;         
