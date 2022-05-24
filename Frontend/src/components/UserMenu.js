@@ -15,7 +15,7 @@ export default function UserMenu() {
       body: JSON.stringify(newPost),
     });
     const data = await response.json();
-    //console.log(data);
+    console.log(data);
   }
 
   console.log(user.u_type);
