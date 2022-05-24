@@ -431,5 +431,29 @@ body {
 .myposts-button-rescued:active {
   transform: scale(0.98);
 }
+
+.back-home {
+  width: 200px;
+  padding: 1rem 2rem;
+  margin-bottom: 20px;
+  margin-top: 200px;
+  margin-left: 50%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
+  cursor: pointer;
+  background: var(--color-primary);
+}
+
+.back-home:hover {
+  background: var(--color-primary-dark);
+}
+
+.back-home:active {
+  transform: scale(0.98);
+}
 /* MY POSTS */
 
