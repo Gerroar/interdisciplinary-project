@@ -2,7 +2,7 @@ import React from "react";
 import PostForm from "./PostForm";
 import { useState } from "react";
 
-export default function CreatePage() {
+export default function UserMenu() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("authUser")));
 
     async function createPost(newPost) {

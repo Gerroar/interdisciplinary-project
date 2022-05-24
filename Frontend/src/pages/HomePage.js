@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
 import PostCard from "../components/PostCard";
-import CreatePage from "../components/CreatePage";
+import CreatePage from "../components/UserMenu";
 
 export default function HomePage(){
     const [posts, setPosts] = useState([]);
@@ -17,13 +17,13 @@ export default function HomePage(){
 
     return (
         <section className="page">
+            <section className="user-menu">        
+                <CreatePage/>
+            </section>
             <section className="grid-container" id="home-posts">
                 {posts.map(post => (
                     <PostCard post={post} key={post.id}/>
                 ))}
-            </section>
-            <section>        
-                <CreatePage/>
             </section>
         </section>
     )

@@ -185,9 +185,14 @@ body {
   display: table-cell;
 }
 
+.page > section {
+  display: inline-block;
+}
 #home-posts{
   background-color: #007f67;
   overflow: auto;
+  height: 98vh;
+  width: 50%;
 }
 
 /*Animation*/
