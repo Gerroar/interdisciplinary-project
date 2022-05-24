@@ -130,12 +130,16 @@ export default function ProfilePage({ setAuth }) {
             onError={(event) => (event.target.src = imgPlaceholder)}
           />
         </div>
-        <button type="submit">Save User </button>
-        <button className="btn-outline" onClick={handleSignOut}>
+        <button className="form__button" type="submit">
+          Save User{" "}
+        </button>
+        <button className="form__button" onClick={handleSignOut}>
           Sign Out
         </button>
         <Link to="/home">
-          <button type="button">Home</button>
+          <button className="form__button" type="button">
+            Home
+          </button>
         </Link>
       </form>
     </section>
