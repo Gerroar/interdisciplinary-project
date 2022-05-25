@@ -408,7 +408,6 @@ AS
 /*TESTS*/
 CALL createUser('testBuyer', 'b', null, '636339804', 'testBuyer@gmail.com', '1234', @result);
 CALL createUser('testSeller', 's', null, '636339805', 'testSeller@gmail.com', 'testPassword', @result);
-
 CALL createUser('testBoth', 't', null, '636339806', 'testBoth@gmail.com', 'myPassword', @result);
 
 /*TESTS*/
