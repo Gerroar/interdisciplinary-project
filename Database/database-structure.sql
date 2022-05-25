@@ -406,34 +406,9 @@ AS
 -- VIEWS
 
 /*TESTS*/
-CALL createUser('gerroar', 'b', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
+CALL createUser('testBuyer', 'b', null, '636339804', 'testBuyer@gmail.com', '1234', @result);
+CALL createUser('testSeller', 's', null, '636339805', 'testSeller@gmail.com', 'testPassword', @result);
 
-CALL `deleteUser`('gerroar');
-CALL createUser('gerroar9789', 'z', null, '636339804', 'germanariasrodriguez@gmail.com', '123456', @result);
-ALTER TABLE posts AUTO_INCREMENT = 0;
-
-CALL createPost(3, 'Test!', 'lorem ipsum', @created);
-CALL createPost(5, 'Hello world!', 'lorem ipsum', @created);
-CALL createPost(5, 'Working in progres!', 'lorem ipsum', @created);
-CALL createPost(5, 'Progres in working!', 'lorem ipsum', @created);
-CALL createPost(4, 'Testing posts!', 'lorem ipsum', @created);
-CALL `updatePost`(4, 2, 'This post have been updated!', 'lorem ipsum', @result);
-SELECT @result;
-CALL `deletePost`(3);
-CALL `checkEmail`('germanariasrodriguez@gmail.com', true, @emailExists);
-
-CALL `updateUserInfo`(4,'gerroar79', 's', null, 40206456, 'gerroar97@gmail.com', 'gerroar1234');
-CALL `userPosts`(4);
-
-CALL deleteUser('gerroar');
-
-CALL userExists('gerroar', true, @isThere);
-ALTER TABLE users AUTO_INCREMENT = 0;
-ALTER TABLE settings AUTO_INCREMENT = 0;
-ALTER TABLE posts AUTO_INCREMENT = 0;
-
-SELECT * FROM full_user_info WHERE u_name = 'natoraza'
-
-CALL checkEmail('novatuga@gmail.com', true, @emailExists);
+CALL createUser('testBoth', 't', null, '636339806', 'testBoth@gmail.com', 'myPassword', @result);
 
 /*TESTS*/
